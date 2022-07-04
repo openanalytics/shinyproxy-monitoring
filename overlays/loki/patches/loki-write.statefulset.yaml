@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: loki-write
+spec:
+  template:
+    spec:
+      containers:
+        - name: write
+          args:
+            - -config.file=/etc/loki/config/config.yaml
+            - -target=write
+            - -config.expand-env=true
+          envFrom:
+            - secretRef:
+                name: loki-minio-secrets
+      affinity:
+        $patch: delete # to make it work on minikube

@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: loki
+
+resources:
+  - resources/loki.namespace.yaml
+  - ../../bases/loki/base.yaml
+
+patchesStrategicMerge:
+  - patches/loki.statefulset.yaml
+  - patches/loki-read.statefulset.yaml
+  - patches/loki-write.statefulset.yaml
+
+configMapGenerator:
+  - name: loki
+    behavior: replace
+    files:
+      - configs/config.yaml
+
+secretGenerator:
+  - name: loki-minio-secrets
+    envs:
+      - secrets/loki-minio-secrets.env

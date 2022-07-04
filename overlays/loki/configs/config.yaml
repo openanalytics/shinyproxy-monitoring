@@ -1,0 +1,39 @@
+auth_enabled: false
+common:
+  path_prefix: /var/loki
+  replication_factor: 3
+  storage:
+    s3:
+      access_key_id: ${S3_ACCESS_KEY_ID}
+      bucketnames: loki
+      endpoint: http://minio.minio.svc:9000
+      insecure: false
+      region: null
+      s3: null
+      s3forcepathstyle: true
+      secret_access_key: ${S3_SECRET_ACCESS_KEY}
+limits_config:
+  enforce_metric_name: false
+  max_cache_freshness_per_query: 10m
+  reject_old_samples: true
+  reject_old_samples_max_age: 168h
+  split_queries_by_interval: 15m
+memberlist:
+  join_members:
+  - loki-memberlist
+ruler:
+  storage:
+    s3:
+      bucketnames: ruler
+schema_config:
+  configs:
+    - from: "2022-01-11"
+      index:
+        period: 24h
+        prefix: loki_index_
+      object_store: s3
+      schema: v12
+      store: boltdb-shipper
+server:
+  grpc_listen_port: 9095
+  http_listen_port: 3100
