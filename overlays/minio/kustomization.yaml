@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: minio
+
+resources:
+  - resources/minio.namespace.yaml
+  - ../../bases/minio/base.yaml
+
+patchesStrategicMerge:
+  - patches/minio.pvc.yaml
+
+secretGenerator:
+  - name: minio-user
+    behavior: replace
+    envs:
+      - secrets/minio.env
