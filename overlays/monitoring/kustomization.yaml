@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../bases/monitoring
+  - resources/monitoring.ingress.yaml
+  - resources/grafana-storage.pvc.yaml
+
+patchesStrategicMerge:
+  - patches/grafana.deployment.yaml
+
+secretGenerator:
+  - name: grafana-datasources
+    namespace: monitoring
+    behavior: replace
+    files:
+      - datasources.yaml=configs/datasources.yaml
