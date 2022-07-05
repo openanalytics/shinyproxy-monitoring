@@ -30,3 +30,4 @@ configMapGenerator:
       - configs/dashboards/shinyproxy-operator-logs.json
       - configs/dashboards/shinyproxy-logs.json
       - configs/dashboards/shinyproxy-usage.json
+      - configs/dashboards/shinyproxy-aggregated-usage.json

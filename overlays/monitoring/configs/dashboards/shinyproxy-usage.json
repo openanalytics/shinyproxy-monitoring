@@ -21,11 +21,11 @@
       }
     ]
   },
-  "editable": false,
+  "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 31,
-  "iteration": 1657018471976,
+  "iteration": 1657025106544,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -36,7 +36,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "${datasource}"
       },
       "fill": 6,
       "fillGradient": 9,
@@ -79,8 +79,12 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
           "exemplar": true,
-          "expr": "sum(rate(startupTime_seconds_sum{spec_id=~\"$spec_id\",shinyproxy_realm=~\"$realm\"}[$__rate_interval])) by (spec_id) / sum(rate(startupTime_seconds_count{spec_id=~\"$spec_id\",shinyproxy_realm=~\"$realm\"}[$__rate_interval])) by (spec_id)",
+          "expr": "sum(rate(startupTime_seconds_sum{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\",spec_id=~\"$spec_id\"}[$__rate_interval])) by (spec_id) / sum(rate(startupTime_seconds_count{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\",spec_id=~\"$spec_id\"}[$__rate_interval])) by (spec_id)",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -130,7 +134,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "${datasource}"
       },
       "fill": 0,
       "fillGradient": 9,
@@ -173,8 +177,12 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
           "exemplar": true,
-          "expr": "sum(rate(usageTime_seconds_sum{spec_id=~\"$spec_id\",shinyproxy_realm=~\"$realm\"}[$__rate_interval])) by (spec_id) / sum(rate(usageTime_seconds_count{spec_id=~\"$spec_id\",shinyproxy_realm=~\"$realm\"}[$__rate_interval])) by (spec_id)",
+          "expr": "sum(rate(usageTime_seconds_sum{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\",spec_id=~\"$spec_id\"}[$__rate_interval])) by (spec_id) / sum(rate(usageTime_seconds_count{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\",spec_id=~\"$spec_id\"}[$__rate_interval])) by (spec_id)",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -225,7 +233,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "${datasource}"
       },
       "fill": 6,
       "fillGradient": 0,
@@ -267,8 +275,12 @@
       "steppedLine": true,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
           "exemplar": true,
-          "expr": "sum by (spec_id) (max by (shinyproxy_instance, spec_id) (absolute_apps_running{spec_id=~\"$spec_id\",shinyproxy_realm=~\"$realm\"}))",
+          "expr": "sum by (spec_id) (max by (shinyproxy_instance, spec_id) (absolute_apps_running{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\",spec_id=~\"$spec_id\"}))",
           "interval": "",
           "legendFormat": "{{spec_id}}",
           "queryType": "randomWalk",
@@ -318,7 +330,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "${datasource}"
       },
       "fill": 6,
       "fillGradient": 0,
@@ -358,8 +370,12 @@
       "steppedLine": true,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
           "exemplar": true,
-          "expr": "max by (shinyproxy_realm) (absolute_users_logged_in{shinyproxy_realm=~\"$realm\"})",
+          "expr": "max by (shinyproxy_realm) (absolute_users_logged_in{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\"})",
           "interval": "",
           "legendFormat": "Users ({{shinyproxy_realm}})",
           "refId": "A"
@@ -407,7 +423,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "${datasource}"
       },
       "fill": 6,
       "fillGradient": 0,
@@ -447,8 +463,12 @@
       "steppedLine": true,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
           "exemplar": true,
-          "expr": "max by (shinyproxy_realm) (absolute_users_active{shinyproxy_realm=~\"$realm\"})",
+          "expr": "max by (shinyproxy_realm) (absolute_users_active{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\"})",
           "interval": "",
           "legendFormat": "Users ({{shinyproxy_realm}})",
           "refId": "A"
@@ -496,7 +516,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "${datasource}"
       },
       "fill": 1,
       "fillGradient": 0,
@@ -534,8 +554,12 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
           "exemplar": true,
-          "expr": "sum(increase(authFailed_total{shinyproxy_realm=~\"$realm\"}[$__rate_interval])) != 0",
+          "expr": "sum(increase(authFailed_total{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\"}[$__rate_interval])) != 0",
           "interval": "",
           "legendFormat": "",
           "queryType": "randomWalk",
@@ -583,7 +607,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "${datasource}"
       },
       "fill": 1,
       "fillGradient": 0,
@@ -621,8 +645,12 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
           "exemplar": true,
-          "expr": "sum(increase(startFailed_total{shinyproxy_realm=~\"$realm\"}[$__rate_interval])) != 0",
+          "expr": "sum(increase(startFailed_total{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\"}[$__rate_interval])) != 0",
           "interval": "",
           "legendFormat": "",
           "queryType": "randomWalk",
@@ -664,7 +692,7 @@
       }
     }
   ],
-  "refresh": "5s",
+  "refresh": false,
   "schemaVersion": 36,
   "style": "dark",
   "tags": [],
@@ -676,7 +704,7 @@
         "hide": 2,
         "includeAll": false,
         "multi": false,
-        "name": "prometheus",
+        "name": "datasource",
         "options": [],
         "query": "prometheus",
         "refresh": 1,
@@ -685,28 +713,27 @@
         "type": "datasource"
       },
       {
-        "allValue": ".*",
+        "allValue": ".+",
         "current": {
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "prometheus"
+          "uid": "${datasource}"
         },
-        "definition": "label_values(spec_id)",
+        "definition": "label_values({shinyproxy_realm=~\".+\"}, namespace)",
         "hide": 0,
         "includeAll": true,
-        "label": "App",
         "multi": true,
-        "name": "spec_id",
+        "name": "namespace",
         "options": [],
         "query": {
-          "query": "label_values(spec_id)",
+          "query": "label_values({shinyproxy_realm=~\".+\"}, namespace)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 0,
+        "sort": 5,
         "type": "query"
       },
       {
@@ -715,35 +742,84 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "prometheus"
+          "uid": "${datasource}"
         },
-        "definition": "label_values(shinyproxy_realm)",
+        "definition": "label_values({namespace=~\"$namespace\"}, shinyproxy_realm)",
         "hide": 0,
         "includeAll": true,
-        "label": "Realm",
+        "label": "",
         "multi": true,
         "name": "realm",
         "options": [],
         "query": {
-          "query": "label_values(shinyproxy_realm)",
+          "query": "label_values({namespace=~\"$namespace\"}, shinyproxy_realm)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 0,
+        "sort": 5,
+        "type": "query"
+      },
+      {
+        "allValue": ".*",
+        "current": {
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
+        "definition": "label_values({namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\"}, shinyproxy_instance)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "name": "instance",
+        "options": [],
+        "query": {
+          "query": "label_values({namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\"}, shinyproxy_instance)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 5,
+        "type": "query"
+      },
+      {
+        "allValue": ".+",
+        "current": {
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
+        "definition": "label_values({namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\"}, spec_id)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "app",
+        "multi": true,
+        "name": "spec_id",
+        "options": [],
+        "query": {
+          "query": "label_values({namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\"}, spec_id)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 5,
         "type": "query"
       }
     ]
   },
   "time": {
-    "from": "now-24h",
+    "from": "now-2h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "ShinyProxy Usage",
   "uid": "shinyproxy-usage",
-  "version": 1,
+  "version": 16,
   "weekStart": ""
 }
