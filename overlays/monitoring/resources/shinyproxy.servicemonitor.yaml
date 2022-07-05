@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: shinyproxy
+  namespace: monitoring
+  labels:
+    app: shinyproxy
+spec:
+  namespaceSelector:
+    any: true
+  selector:
+    matchLabels:
+      app: shinyproxy
+  endpoints:
+    - targetPort: 9090
+      path: /actuator/prometheus

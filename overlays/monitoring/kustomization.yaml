@@ -8,6 +8,7 @@ resources:
 
 patchesStrategicMerge:
   - patches/grafana.deployment.yaml
+  - patches/prometheus.clusterrole.yaml
 
 secretGenerator:
   - name: grafana-datasources
@@ -28,3 +29,4 @@ configMapGenerator:
       - configs/dashboards/shinyproxy-app-logs.json
       - configs/dashboards/shinyproxy-operator-logs.json
       - configs/dashboards/shinyproxy-logs.json
+      - configs/dashboards/shinyproxy-usage.json
