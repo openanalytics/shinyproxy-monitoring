@@ -26,3 +26,5 @@ configMapGenerator:
     namespace: monitoring
     files:
       - configs/dashboards/shinyproxy-app-logs.json
+      - configs/dashboards/shinyproxy-operator-logs.json
+      - configs/dashboards/shinyproxy-logs.json
