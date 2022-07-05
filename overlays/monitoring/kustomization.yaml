@@ -15,3 +15,14 @@ secretGenerator:
     behavior: replace
     files:
       - datasources.yaml=configs/datasources.yaml
+
+configMapGenerator:
+  - name: grafana-dashboards
+    namespace: monitoring
+    behavior: replace
+    files:
+      - dashboards.yaml=configs/grafana-dashboardSources.json
+  - name: grafana-shinyproxy-dashboards
+    namespace: monitoring
+    files:
+      - configs/dashboards/shinyproxy-app-logs.json

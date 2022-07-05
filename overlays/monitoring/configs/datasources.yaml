@@ -2,11 +2,13 @@ apiVersion: 1
 datasources:
   - name: Prometheus
     type: prometheus
+    uid: prometheus
     access: proxy
     url: http://prometheus-k8s.monitoring.svc:9090
     version: 1
   - name: Loki
     type: loki
+    uid: loki
     access: proxy
     url: http://loki-gateway.loki.svc
     version: 1

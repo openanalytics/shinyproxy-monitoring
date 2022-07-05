@@ -6,8 +6,18 @@ metadata:
 spec:
   template:
     spec:
+      containers:
+        - name: grafana
+          image: grafana/grafana:8.5.6
+          volumeMounts:
+            - mountPath: /grafana-dashboard-definitions/1
+              name: grafana-shinyproxy-dashboards
+              readOnly: true
       volumes:
-      - emptyDir: null
-        name: grafana-storage
-        persistentVolumeClaim:
-          claimName: grafana-storage
+        - emptyDir: null
+          name: grafana-storage
+          persistentVolumeClaim:
+            claimName: grafana-storage
+        - name: grafana-shinyproxy-dashboards
+          configMap:
+             name: grafana-shinyproxy-dashboards
