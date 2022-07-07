@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: minio
 spec:
@@ -10,11 +10,3 @@ spec:
           resources:
             requests:
               memory: 4Gi
-  volumeClaimTemplates:
-    - metadata:
-        name: export
-      spec:
-        accessModes: [ "ReadWriteOnce" ]
-        resources:
-          requests:
-            storage: 30Gi

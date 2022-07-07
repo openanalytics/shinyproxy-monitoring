@@ -9,9 +9,13 @@ resources:
 
 patchesStrategicMerge:
   - patches/minio.pvc.yaml
+  - patches/minio.deployment.yaml
 
 secretGenerator:
-  - name: minio-user
+  - name: minio
     behavior: replace
     envs:
       - secrets/minio.env
+
+generatorOptions:
+  disableNameSuffixHash: true
