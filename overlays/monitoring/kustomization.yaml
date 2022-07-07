@@ -5,10 +5,17 @@ resources:
   - ../../bases/monitoring
   - resources/monitoring.ingress.yaml
   - resources/grafana-storage.pvc.yaml
+  - resources/shinyproxy.servicemonitor.yaml
 
 patchesStrategicMerge:
   - patches/grafana.deployment.yaml
-  - patches/prometheus.clusterrole.yaml
+  - patches/kubeStateMetrics-deployment.yaml
+
+patches:
+  - target:
+      kind: ClusterRole
+      name: prometheus-k8s
+    path: patches/prometheus-k8s.clusterrole.yaml
 
 secretGenerator:
   - name: grafana-datasources
@@ -31,3 +38,4 @@ configMapGenerator:
       - configs/dashboards/shinyproxy-logs.json
       - configs/dashboards/shinyproxy-usage.json
       - configs/dashboards/shinyproxy-aggregated-usage.json
+      - configs/dashboards/shinyproxy-app-resources.json
