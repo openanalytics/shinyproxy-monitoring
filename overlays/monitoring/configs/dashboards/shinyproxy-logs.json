@@ -188,15 +188,14 @@
       "type": "logs"
     }
   ],
-  "refresh": "",
+  "refresh": "10s",
   "schemaVersion": 36,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
-        "current": {
-        },
+        "current": {},
         "hide": 2,
         "includeAll": false,
         "multi": false,
@@ -209,8 +208,7 @@
         "type": "datasource"
       },
       {
-        "current": {
-        },
+        "current": {},
         "datasource": {
           "type": "loki",
           "uid": "${datasource}"
@@ -222,15 +220,14 @@
         "name": "namespace",
         "options": [],
         "query": "label_values({job=~\".+\",sp_realm_id=~\".+\"}, namespace)",
-        "refresh": 1,
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 6,
+        "sort": 5,
         "type": "query"
       },
       {
-        "current": {
-        },
+        "current": {},
         "datasource": {
           "type": "loki",
           "uid": "${datasource}"
@@ -242,16 +239,15 @@
         "name": "realm",
         "options": [],
         "query": "label_values({job=~\".+\",namespace=\"$namespace\"}, sp_realm_id)",
-        "refresh": 1,
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 6,
+        "sort": 5,
         "type": "query"
       },
       {
         "allValue": ".*",
-        "current": {
-        },
+        "current": {},
         "datasource": {
           "type": "loki",
           "uid": "${datasource}"
@@ -263,15 +259,22 @@
         "name": "instance",
         "options": [],
         "query": "label_values({job=~\".+\",namespace=\"$namespace\", sp_realm_id=\"$realm\"}, sp_instance)",
-        "refresh": 1,
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 6,
+        "sort": 5,
         "type": "query"
       },
       {
         "allValue": ".*",
         "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
         },
         "hide": 0,
         "includeAll": true,
@@ -313,8 +316,9 @@
     ]
   },
   "time": {
-    "from": "now-24h",
-    "to": "now"
+    "from": "now-30m",
+    "to": "now",
+    "timezone": "browser"
   },
   "timepicker": {},
   "timezone": "browser",

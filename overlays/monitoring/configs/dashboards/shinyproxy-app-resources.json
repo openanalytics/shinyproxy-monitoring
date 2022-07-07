@@ -22,7 +22,7 @@
       }
     ]
   },
-  "editable": true,
+  "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "iteration": 1657194453477,
@@ -110,7 +110,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "$datasource"
+        "uid": "${datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -253,7 +253,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "${datasource}"
           },
           "editorMode": "code",
           "expr": "sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate{namespace=\"$namespace\", pod=\"$pod\", container!=\"POD\"})",
@@ -267,7 +267,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "${datasource}"
           },
           "expr": "sum(\n    kube_pod_container_resource_requests{job=\"kube-state-metrics\", namespace=\"$namespace\", pod=\"$pod\", resource=\"cpu\"}\n)\n",
           "format": "time_series",
@@ -279,7 +279,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "${datasource}"
           },
           "expr": "sum(\n    kube_pod_container_resource_limits{job=\"kube-state-metrics\", namespace=\"$namespace\", pod=\"$pod\", resource=\"cpu\"}\n)\n",
           "format": "time_series",
@@ -295,7 +295,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "$datasource"
+        "uid": "${datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -396,7 +396,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "$datasource"
+        "uid": "${datasource}"
       },
       "fieldConfig": {
         "defaults": {
@@ -737,45 +737,15 @@
       "type": "timeseries"
     }
   ],
-  "refresh": "",
+  "refresh": "10s",
   "schemaVersion": 36,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
-        "current": {
-          "selected": false,
-          "text": "_",
-          "value": "_"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "${datasource}"
-        },
-        "definition": "label_values({job=~\".+\", namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_user_id=\"$user\", annotation_openanalytics_eu_sp_spec_id=\"$app\"}, annotation_openanalytics_eu_sp_app_instance)",
-        "hide": 0,
-        "includeAll": false,
-        "multi": false,
-        "name": "instance",
-        "options": [],
-        "query": {
-          "query": "label_values({job=~\".+\", namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_user_id=\"$user\", annotation_openanalytics_eu_sp_spec_id=\"$app\"}, annotation_openanalytics_eu_sp_app_instance)",
-          "refId": "StandardVariableQuery"
-        },
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 5,
-        "type": "query"
-      },
-      {
         "allValue": ".+",
-        "current": {
-          "selected": false,
-          "text": "shinyproxy-operator",
-          "value": "shinyproxy-operator"
-        },
+        "current": {},
         "datasource": {
           "type": "prometheus",
           "uid": "${datasource}"
@@ -797,11 +767,7 @@
         "type": "query"
       },
       {
-        "current": {
-          "selected": false,
-          "text": "shinyproxy",
-          "value": "shinyproxy"
-        },
+        "current": {},
         "datasource": {
           "type": "prometheus",
           "uid": "${datasource}"
@@ -826,11 +792,7 @@
         "useTags": false
       },
       {
-        "current": {
-          "selected": false,
-          "text": "jack",
-          "value": "jack"
-        },
+        "current": {},
         "datasource": {
           "type": "prometheus",
           "uid": "${datasource}"
@@ -855,11 +817,7 @@
         "useTags": false
       },
       {
-        "current": {
-          "selected": false,
-          "text": "rstudio",
-          "value": "rstudio"
-        },
+        "current": {},
         "datasource": {
           "type": "prometheus",
           "uid": "${datasource}"
@@ -884,11 +842,29 @@
         "useTags": false
       },
       {
-        "current": {
-          "selected": false,
-          "text": "271c9eea-2866-4367-af62-841095dfa89c",
-          "value": "271c9eea-2866-4367-af62-841095dfa89c"
+        "current": {},
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
         },
+        "definition": "label_values({job=~\".+\", namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_user_id=\"$user\", annotation_openanalytics_eu_sp_spec_id=\"$app\"}, annotation_openanalytics_eu_sp_app_instance)",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "instance",
+        "options": [],
+        "query": {
+          "query": "label_values({job=~\".+\", namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_user_id=\"$user\", annotation_openanalytics_eu_sp_spec_id=\"$app\"}, annotation_openanalytics_eu_sp_app_instance)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 5,
+        "type": "query"
+      },
+      {
+        "current": {},
         "datasource": {
           "type": "prometheus",
           "uid": "${datasource}"
@@ -913,11 +889,7 @@
         "useTags": false
       },
       {
-        "current": {
-          "selected": false,
-          "text": "Prometheus",
-          "value": "Prometheus"
-        },
+        "current": {},
         "hide": 2,
         "includeAll": false,
         "multi": false,
@@ -930,11 +902,7 @@
         "type": "datasource"
       },
       {
-        "current": {
-          "selected": false,
-          "text": "sp-pod-1ff03901-4cf3-4fb7-ac41-2918d423b869",
-          "value": "sp-pod-1ff03901-4cf3-4fb7-ac41-2918d423b869"
-        },
+        "current": {},
         "datasource": {
           "type": "prometheus",
           "uid": "${datasource}"
@@ -958,8 +926,9 @@
     ]
   },
   "time": {
-    "from": "now-5m",
-    "to": "now"
+    "from": "now-30m",
+    "to": "now",
+    "timezone": "browser"
   },
   "timepicker": {
     "refresh_intervals": [

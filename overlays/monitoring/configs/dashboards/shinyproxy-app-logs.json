@@ -22,7 +22,7 @@
       }
     ]
   },
-  "editable": true,
+  "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "iteration": 1657194156298,
@@ -149,11 +149,7 @@
   "templating": {
     "list": [
       {
-        "current": {
-          "selected": false,
-          "text": "shinyproxy-operator",
-          "value": "shinyproxy-operator"
-        },
+        "current": {},
         "datasource": {
           "type": "loki",
           "uid": "${datasource}"
@@ -165,18 +161,14 @@
         "name": "namespace",
         "options": [],
         "query": "label_values({sp_realm_id=~\".+\"}, namespace)",
-        "refresh": 1,
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 5,
         "type": "query"
       },
       {
-        "current": {
-          "selected": false,
-          "text": "shinyproxy",
-          "value": "shinyproxy"
-        },
+        "current": {},
         "datasource": {
           "type": "loki",
           "uid": "${datasource}"
@@ -198,11 +190,7 @@
         "useTags": false
       },
       {
-        "current": {
-          "selected": false,
-          "text": "jack",
-          "value": "jack"
-        },
+        "current": {},
         "datasource": {
           "type": "loki",
           "uid": "${datasource}"
@@ -224,11 +212,7 @@
         "useTags": false
       },
       {
-        "current": {
-          "selected": true,
-          "text": "zeppelin",
-          "value": "zeppelin"
-        },
+        "current": {},
         "datasource": {
           "type": "loki",
           "uid": "${datasource}"
@@ -243,18 +227,14 @@
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 0,
+        "sort": 5,
         "tagValuesQuery": "",
         "tagsQuery": "",
         "type": "query",
         "useTags": false
       },
       {
-        "current": {
-          "selected": false,
-          "text": "_",
-          "value": "_"
-        },
+        "current": {},
         "datasource": {
           "type": "loki",
           "uid": "${datasource}"
@@ -266,18 +246,14 @@
         "name": "instance",
         "options": [],
         "query": "label_values({job=~\".+\",namespace=\"$namespace\",sp_realm_id=\"$realm\",sp_user_id=\"$user\", sp_spec_id=\"$app\"}, sp_proxy_instance)",
-        "refresh": 1,
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 5,
         "type": "query"
       },
       {
-        "current": {
-          "selected": false,
-          "text": "76a369ce-c5c3-4755-ae46-5e99f1ce4ba2",
-          "value": "76a369ce-c5c3-4755-ae46-5e99f1ce4ba2"
-        },
+        "current": {},
         "datasource": {
           "type": "loki",
           "uid": "${datasource}"
@@ -299,11 +275,7 @@
         "useTags": false
       },
       {
-        "current": {
-          "selected": false,
-          "text": "Loki",
-          "value": "Loki"
-        },
+        "current": {},
         "hide": 2,
         "includeAll": false,
         "multi": false,
@@ -318,8 +290,9 @@
     ]
   },
   "time": {
-    "from": "now-24h",
-    "to": "now"
+    "from": "now-30m",
+    "to": "now",
+    "timezone": "browser"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -339,5 +312,6 @@
   "title": "ShinyProxy App Logs",
   "uid": "shinyproxy-app-logs",
   "version": 3,
-  "weekStart": ""
+  "weekStart": "",
+  "refresh": "10s"
 }

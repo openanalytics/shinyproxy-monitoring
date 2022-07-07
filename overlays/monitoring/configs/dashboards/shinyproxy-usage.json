@@ -692,15 +692,14 @@
       }
     }
   ],
-  "refresh": false,
+  "refresh": "10s",
   "schemaVersion": 36,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
-        "current": {
-        },
+        "current": {},
         "hide": 2,
         "includeAll": false,
         "multi": false,
@@ -714,8 +713,7 @@
       },
       {
         "allValue": ".+",
-        "current": {
-        },
+        "current": {},
         "datasource": {
           "type": "prometheus",
           "uid": "${datasource}"
@@ -738,8 +736,7 @@
       },
       {
         "allValue": ".*",
-        "current": {
-        },
+        "current": {},
         "datasource": {
           "type": "prometheus",
           "uid": "${datasource}"
@@ -763,8 +760,7 @@
       },
       {
         "allValue": ".*",
-        "current": {
-        },
+        "current": {},
         "datasource": {
           "type": "prometheus",
           "uid": "${datasource}"
@@ -787,8 +783,7 @@
       },
       {
         "allValue": ".+",
-        "current": {
-        },
+        "current": {},
         "datasource": {
           "type": "prometheus",
           "uid": "${datasource}"
@@ -813,8 +808,9 @@
     ]
   },
   "time": {
-    "from": "now-2h",
-    "to": "now"
+    "from": "now-30m",
+    "to": "now",
+    "timezone": "browser"
   },
   "timepicker": {},
   "timezone": "browser",
