@@ -1,43 +1,24 @@
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: prometheus-k8s
-  namespace: monitoring
-rules:
-  - apiGroups:
-      - monitoring.coreos.com
-    resources:
-#      - alertmanagers
-#      - alertmanagers/finalizers
-#      - alertmanagerconfigs
-#      - prometheuses
-#      - prometheuses/finalizers
-#      - thanosrulers
-#      - thanosrulers/finalizers
-      - servicemonitors
-#      - podmonitors
-#      - probes
-#      - prometheusrules
-    verbs:
-    - "get"
-    - "list"
-    - "watch"
-  - apiGroups:
+- op: add
+  path: /rules/-
+  value:
+    apiGroups:
       - ""
     resources:
-      #      - alertmanagers
-      #      - alertmanagers/finalizers
-      #      - alertmanagerconfigs
-      #      - prometheuses
-      #      - prometheuses/finalizers
-      #      - thanosrulers
-      #      - thanosrulers/finalizers
       - pods
       - endpoints
       - services
-    #      - podmonitors
-    #      - probes
-    #      - prometheusrules
+    verbs:
+      - "get"
+      - "list"
+      - "watch"
+
+- op: add
+  path: /rules/-
+  value:
+    apiGroups:
+      - monitoring.coreos.com
+    resources:
+        - servicemonitors
     verbs:
       - "get"
       - "list"
