@@ -25,7 +25,7 @@
   "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "iteration": 1657194156298,
+  "iteration": 1657204044521,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -135,7 +135,7 @@
             "type": "loki",
             "uid": "${datasource}"
           },
-          "expr": "{sp_realm_id=~\".+\", namespace=\"$namespace\", sp_realm_id=\"$realm\", sp_user_id=\"$user\", sp_spec_id=\"$app\", sp_proxy_instance=\"$instance\", sp_proxy_id=\"$id\"} ",
+          "expr": "{sp_realm_id=~\".+\", namespace=\"$namespace\", sp_realm_id=\"$realm\", sp_user_id=\"$user\", sp_spec_id=\"$app\", sp_proxy_instance=\"$instance\", sp_proxy_id=\"$id\", sp_proxy_id!=\"\"} ",
           "refId": "A"
         }
       ],
@@ -143,6 +143,7 @@
       "type": "logs"
     }
   ],
+  "refresh": "10s",
   "schemaVersion": 36,
   "style": "dark",
   "tags": [],
@@ -291,8 +292,8 @@
   },
   "time": {
     "from": "now-30m",
-    "to": "now",
-    "timezone": "browser"
+    "timezone": "browser",
+    "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -311,7 +312,6 @@
   "timezone": "browser",
   "title": "ShinyProxy App Logs",
   "uid": "shinyproxy-app-logs",
-  "version": 3,
-  "weekStart": "",
-  "refresh": "10s"
+  "version": 1,
+  "weekStart": ""
 }
