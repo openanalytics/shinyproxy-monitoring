@@ -1,0 +1,106 @@
+apiVersion: openanalytics.eu/v1alpha1
+kind: ShinyProxy
+metadata:
+  name: shinyproxy2
+spec:
+  management:
+    metrics:
+      export:
+        prometheus:
+          enabled: true
+  server:
+    forward-headers-strategy: native
+    servlet:
+      context-path: /shinyproxy2
+  spring:
+    session:
+      store-type: redis
+      redis:
+        configure-action: none
+    redis:
+      host: redis
+      password: ${REDIS_PASSWORD}
+  proxy:
+    usage-stats-url: micrometer
+    operator:
+      force-transfer: true
+    defaultMaxInstances: -1
+    title: Open Analytics Shiny Proxy 2
+    logo-url: https://www.openanalytics.eu/shinyproxy/logo.png
+    landingPage: /
+    containerBackend: kubernetes
+    kubernetes:
+      namespace: shinyproxy-operator
+      internal-networking: true
+      image-pull-policy: Always
+    authentication: simple
+    admin-groups: scientists
+    users:
+    - name: jack
+      password: password
+      groups: scientists
+    - name: jeff
+      password: password
+      groups: mathematicians
+    specs:
+      - id: rstudio
+        display-name: RStudio
+        container-image: openanalytics/shinyproxy-rstudio-ide-demo:1.4.1106__4.0.4
+        container-env:
+          DISABLE_AUTH: true
+          WWW_ROOT_PATH: "#{proxy.getRuntimeValue('SHINYPROXY_PUBLIC_PATH')}"
+        port: 8787
+        max-instances: 5
+        container-memory-limit: 1Gi
+        container-cpu-limit: 0.5
+      - id: dash-demo
+        display-name: Dash Demo
+        port: 8050
+        container-image: openanalytics/shinyproxy-dash-demo
+      - id: zeppelin
+        display-name: Apache Zeppelin
+        container-image: apache/zeppelin:0.8.1
+        port: 8080
+      - id: nutrition
+        display-name: Nutrition Calculator
+        container-image: ledfan/shinyporxy-nutrient:latest
+      - id: jupyter-notebook
+        display-name: Jupyter Notebook Lab
+        container-cmd: ["start-notebook.sh", "--NotebookApp.token=''", "--NotebookApp.base_url=#{proxy.getRuntimeValue('SHINYPROXY_PUBLIC_PATH')}"]
+        container-image: jupyter/base-notebook
+        port: 8888
+        target-path: "#{proxy.getRuntimeValue('SHINYPROXY_PUBLIC_PATH')}"
+        container-env:
+          JUPYTER_ENABLE_LAB: yes
+      - id: 01_hello
+        display-name: Hello Application
+        description: Application which demonstrates the basics of a Shiny app
+        container-cmd: ["R", "-e", "shinyproxy::run_01_hello()"]
+        container-image: openanalytics/shinyproxy-demo
+        access-groups: [scientists, mathematicians]
+      - id: 06_tabsets
+        container-cmd: ["R", "-e", "shinyproxy::run_06_tabsets()"]
+        container-image: openanalytics/shinyproxy-demo
+        access-groups: scientists
+  kubernetesPodTemplateSpecPatches: |
+    - op: add
+      path: /spec/containers/0/env/-
+      value:
+        name: REDIS_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: redis-password
+            key: password
+    - op: add
+      path: /spec/containers/0/resources
+      value:
+        limits:
+          cpu: 1
+        requests:
+          cpu: 0.5
+    - op: add
+      path: /spec/serviceAccountName
+      value: shinyproxy-sa
+  image: openanalytics/shinyproxy:2.6.1
+  imagePullPolicy: Always
+  fqdn: operator-demo.local

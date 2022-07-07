@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: shinyproxy-operator
+resources:
+  - resources/shinyproxy-operator.namespace.yaml
+  - github.com/openanalytics/shinyproxy-operator/docs/deployment/bases/namespaced/operator?ref=develop
+  - github.com/openanalytics/shinyproxy-operator/docs/deployment/bases/redis?ref=develop
+  - github.com/openanalytics/shinyproxy-operator/docs/deployment/bases/namespaced/skipper-hpa?ref=develop
+  - github.com/openanalytics/shinyproxy-operator/docs/deployment/bases/shinyproxy?ref=develop
+  - resources/nginx-to-skipper-ingress.ingress.yaml
+  - resources/shinyproxy1.shinyproxy.yaml
+  - resources/shinyproxy2.shinyproxy.yaml
+
+patchesStrategicMerge:
+  - patches/shinyproxy-operator-role rules.role.yaml
