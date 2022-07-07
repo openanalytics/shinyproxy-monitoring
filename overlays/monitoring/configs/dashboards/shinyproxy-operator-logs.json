@@ -212,7 +212,7 @@
         },
         "datasource": {
           "type": "loki",
-          "uid": "loki42"
+          "uid": "${datasource}"
         },
         "definition": "label_values({sp_realm_id=~\".+\"}, namespace)",
         "hide": 0,
