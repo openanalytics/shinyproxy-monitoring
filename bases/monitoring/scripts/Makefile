@@ -25,3 +25,4 @@ update:
 
 clean:
 	rm -rf $(git_dir) $(out_dir)/manifests $(out_dir)/kustomization.yaml
+
