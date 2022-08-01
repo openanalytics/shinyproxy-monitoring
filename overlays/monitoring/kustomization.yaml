@@ -25,6 +25,11 @@ secretGenerator:
     behavior: replace
     files:
       - datasources.yaml=configs/datasources.yaml
+#  Example OIDC Configuration:
+#  - envs:
+#      - secrets/grafana.env
+#    name: grafana
+#    namespace: monitoring
 
 configMapGenerator:
   - name: grafana-dashboards

@@ -13,6 +13,27 @@ spec:
             - mountPath: /grafana-dashboard-definitions/1
               name: grafana-shinyproxy-dashboards
               readOnly: true
+          envFrom:
+            - secretRef:
+                name: grafana
+# Example OIDC Configuration:
+#          env:
+#            - name: GF_USERS_ALLOW_SIGN_UP
+#              value: "false"
+#            - name: GF_USERS_AUTO_ASSIGN_ORG
+#              value: "true"
+#            - name: GF_AUTH_DISABLE_LOGIN_FORM
+#              value: "true"
+#            - name: GF_AUTH_DISABLE_SIGNOUT_MENU
+#              value: "true"
+#            - name: GF_AUTH_GENERIC_OAUTH_ENABLED
+#              value: "true"
+#            - name: GF_AUTH_GENERIC_OAUTH_NAME
+#              value: "keycloak"
+#            - name: GF_AUTH_GENERIC_OAUTH_ALLOW_SIGN_UP
+#              value: "true"
+#            - name: GF_AUTH_OAUTH_AUTO_LOGIN
+#              value: "true"
       volumes:
         - emptyDir: null
           name: grafana-storage
