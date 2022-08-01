@@ -14,9 +14,9 @@ spec:
               name: grafana-shinyproxy-dashboards
               readOnly: true
           envFrom:
-            - secretRef:
-                name: grafana
 # Example OIDC Configuration:
+#            - secretRef:
+#                name: grafana
 #          env:
 #            - name: GF_USERS_ALLOW_SIGN_UP
 #              value: "false"

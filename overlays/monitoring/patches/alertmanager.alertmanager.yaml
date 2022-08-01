@@ -7,7 +7,7 @@ spec:
   storage:
     volumeClaimTemplate:
       metadata:
-        name: prometheus
+        name: alertmanager
       spec:
         accessModes: [ "ReadWriteOnce" ]
         resources:

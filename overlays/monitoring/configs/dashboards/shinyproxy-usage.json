@@ -24,8 +24,7 @@
   "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 31,
-  "iteration": 1657025106544,
+  "iteration": 1659369734231,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -718,14 +717,14 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values({shinyproxy_realm=~\".+\"}, namespace)",
+        "definition": "label_values(absolute_users_logged_in{shinyproxy_realm=~\".+\"}, namespace)",
         "hide": 0,
         "includeAll": true,
         "multi": true,
         "name": "namespace",
         "options": [],
         "query": {
-          "query": "label_values({shinyproxy_realm=~\".+\"}, namespace)",
+          "query": "label_values(absolute_users_logged_in{shinyproxy_realm=~\".+\"}, namespace)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -741,7 +740,7 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values({namespace=~\"$namespace\"}, shinyproxy_realm)",
+        "definition": "label_values(absolute_users_logged_in{namespace=~\"$namespace\"}, shinyproxy_realm)",
         "hide": 0,
         "includeAll": true,
         "label": "",
@@ -749,7 +748,7 @@
         "name": "realm",
         "options": [],
         "query": {
-          "query": "label_values({namespace=~\"$namespace\"}, shinyproxy_realm)",
+          "query": "label_values(absolute_users_logged_in{namespace=~\"$namespace\"}, shinyproxy_realm)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -765,14 +764,14 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values({namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\"}, shinyproxy_instance)",
+        "definition": "label_values(absolute_users_logged_in{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\"}, shinyproxy_instance)",
         "hide": 0,
         "includeAll": true,
         "multi": true,
         "name": "instance",
         "options": [],
         "query": {
-          "query": "label_values({namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\"}, shinyproxy_instance)",
+          "query": "label_values(absolute_users_logged_in{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\"}, shinyproxy_instance)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -788,7 +787,7 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values({namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\"}, spec_id)",
+        "definition": "label_values(absolute_apps_running{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\"}, spec_id)",
         "hide": 0,
         "includeAll": true,
         "label": "app",
@@ -796,7 +795,7 @@
         "name": "spec_id",
         "options": [],
         "query": {
-          "query": "label_values({namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\"}, spec_id)",
+          "query": "label_values(absolute_apps_running{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\"}, spec_id)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -809,13 +808,13 @@
   },
   "time": {
     "from": "now-30m",
-    "to": "now",
-    "timezone": "browser"
+    "timezone": "browser",
+    "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "ShinyProxy Usage",
   "uid": "shinyproxy-usage",
-  "version": 16,
+  "version": 2,
   "weekStart": ""
 }
