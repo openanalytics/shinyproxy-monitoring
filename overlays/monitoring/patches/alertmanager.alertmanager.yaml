@@ -1,10 +1,9 @@
 apiVersion: monitoring.coreos.com/v1
-kind: Prometheus
+kind: Alertmanager
 metadata:
-  name: k8s
+  name: main
   namespace: monitoring
 spec:
-  retention: 90d
   storage:
     volumeClaimTemplate:
       metadata:
@@ -13,4 +12,4 @@ spec:
         accessModes: [ "ReadWriteOnce" ]
         resources:
           requests:
-            storage: 10Gi
+            storage: 5Gi

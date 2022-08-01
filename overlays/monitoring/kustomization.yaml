@@ -11,6 +11,7 @@ patchesStrategicMerge:
   - patches/grafana.deployment.yaml
   - patches/kubeStateMetrics-deployment.yaml
   - patches/prometheus.prometheus.yaml
+  - patches/alertmanager.alertmanager.yaml
 
 patches:
   - target:
