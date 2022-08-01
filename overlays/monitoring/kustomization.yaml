@@ -10,6 +10,7 @@ resources:
 patchesStrategicMerge:
   - patches/grafana.deployment.yaml
   - patches/kubeStateMetrics-deployment.yaml
+  - patches/prometheus.prometheus.yaml
 
 patches:
   - target:
