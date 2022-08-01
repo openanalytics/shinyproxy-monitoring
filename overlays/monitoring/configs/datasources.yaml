@@ -10,5 +10,5 @@ datasources:
     type: loki
     uid: loki
     access: proxy
-    url: http://loki-gateway.loki.svc
+    url: http://loki.loki.svc:3100/
     version: 1

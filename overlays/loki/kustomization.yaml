@@ -9,16 +9,10 @@ resources:
 
 patchesStrategicMerge:
   - patches/loki.statefulset.yaml
-  - patches/loki-read.statefulset.yaml
-  - patches/loki-write.statefulset.yaml
-
-configMapGenerator:
-  - name: loki
-    behavior: replace
-    files:
-      - configs/config.yaml
 
 secretGenerator:
-  - name: loki-minio-secrets
-    envs:
-      - secrets/loki-minio-secrets.env
+  - name: loki
+    namespace: loki
+    behavior: replace
+    files:
+      - loki.yaml=configs/config.yaml

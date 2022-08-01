@@ -1,39 +1,55 @@
+# This is based on the config file from the loki helm chart.
+# It was changed to set up retention for 90 days, see: https://grafana.com/docs/loki/latest/operations/storage/retention/
+
 auth_enabled: false
-common:
-  path_prefix: /var/loki
-  replication_factor: 3
-  storage:
-    s3:
-      access_key_id: ${S3_ACCESS_KEY_ID}
-      bucketnames: loki
-      endpoint: http://minio.minio.svc:9000
-      insecure: false
-      region: null
-      s3: null
-      s3forcepathstyle: true
-      secret_access_key: ${S3_SECRET_ACCESS_KEY}
+chunk_store_config:
+  max_look_back_period: 0s
+compactor:
+  shared_store: filesystem
+  working_directory: /data/loki/boltdb-shipper-compactor
+  compaction_interval: 10m            # MODIFIED
+  retention_enabled: true             # MODIFIED
+  retention_delete_delay: 2h          # MODIFIED
+  retention_delete_worker_count: 150  # MODIFIED
+ingester:
+  chunk_block_size: 262144
+  chunk_idle_period: 3m
+  chunk_retain_period: 1m
+  lifecycler:
+    ring:
+      replication_factor: 1
+  max_transfer_retries: 0
+  wal:
+    dir: /data/loki/wal
 limits_config:
   enforce_metric_name: false
-  max_cache_freshness_per_query: 10m
+  max_entries_limit_per_query: 5000
   reject_old_samples: true
   reject_old_samples_max_age: 168h
-  split_queries_by_interval: 15m
+  retention_period: 90d               # MODIFIED
 memberlist:
   join_members:
-  - loki-memberlist
-ruler:
-  storage:
-    s3:
-      bucketnames: ruler
+    - 'dummy-release-loki-memberlist'
 schema_config:
   configs:
-    - from: "2022-01-11"
+    - from: "2020-10-24"
       index:
         period: 24h
-        prefix: loki_index_
-      object_store: s3
-      schema: v12
+        prefix: index_
+      object_store: filesystem
+      schema: v11
       store: boltdb-shipper
 server:
   grpc_listen_port: 9095
   http_listen_port: 3100
+storage_config:
+  boltdb_shipper:
+    active_index_directory: /data/loki/boltdb-shipper-active
+    cache_location: /data/loki/boltdb-shipper-cache
+    cache_ttl: 24h
+    shared_store: filesystem
+  filesystem:
+    directory: /data/loki/chunks
+table_manager:
+  retention_deletes_enabled: false
+  retention_period: 0s

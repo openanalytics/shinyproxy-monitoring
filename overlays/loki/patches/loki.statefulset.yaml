@@ -1,7 +1,14 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: loki-read
+  name: loki
+  namespace: loki
 spec:
-  persistentVolumeClaimRetentionPolicy:
-    $patch: delete
+  volumeClaimTemplates:
+    - metadata:
+        name: storage
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 10Gi
