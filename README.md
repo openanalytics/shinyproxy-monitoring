@@ -9,6 +9,8 @@ running in ShinyProxy. Prometheus is used for gathering metrics of ShinyProxy
 and the apps (i.e. the resources used by the apps). The setup also includes
 Grafana, together with **six** dashboards for visualizing all logs and metrics.
 
+The retention of both Loki and Prometheus is set to 90 days.
+
 ## Overview of dashboards
 
 ### ShinyProxy Usage
