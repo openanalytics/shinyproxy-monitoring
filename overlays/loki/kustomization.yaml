@@ -5,7 +5,7 @@ namespace: loki
 
 resources:
   - resources/loki.namespace.yaml
-  - ../../bases/loki/base.yaml
+  - ../../bases/loki
 
 patchesStrategicMerge:
   - patches/loki.statefulset.yaml

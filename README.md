@@ -237,40 +237,34 @@ This section demonstrates how to set up this stack in minikube.
    MINIKUBE_IP       operator-demo.local
    ``` 
 
-4. Apply the CRDs of the monitoring stack:
-
-    ```bash
-    kubectl apply --server-side -f bases/monitoring/manifests/setup/
-    ```
-
-5. Set up Loki
+4. Set up Loki
 
     ```bash
     cd overlays/loki
-    kustomize build --load-restrictor LoadRestrictionsNone . | kubectl apply -f -
+    kustomize build | kubectl apply --server-side -f - 
     ```
 
    **Note:** re-run the command if it fails because it cannot find some CRDs.
 
-6. Set up Promtail
+5. Set up Promtail
 
     ```bash
     cd overlays/promtail
-    kustomize build --load-restrictor LoadRestrictionsNone . | kubectl apply -f -
+    kustomize build | kubectl apply --server-side -f - 
     ```
 
-7. Set up Prometheus and Grafana
+6. Set up Prometheus and Grafana
 
     ```bash
     cd overlays/monitoring
-    kustomize build --load-restrictor LoadRestrictionsNone . | kubectl apply -f -
+    kustomize build | kubectl apply --server-side -f - 
     ```
 
-8. Set up the demo ShinyProxy Operator deployment:
+7. Set up the demo ShinyProxy Operator deployment:
 
     ```bash
     cd overlays/shinyproxy
-    kustomize build --load-restrictor LoadRestrictionsNone . | kubectl apply -f -
+    kustomize build | kubectl apply --server-side -f - 
      ```
 
    **Note:** re-run the command if it fails because it cannot find some CRDs.

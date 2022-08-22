@@ -17,6 +17,9 @@ update:
 	echo "resources:" >> $(out_dir)/kustomization.yaml
 
 	cd ../ ; \
+ 	find "manifests/setup" -maxdepth 1 -type f -print0 | while read  -d $$'\0' -r file; do \
+		printf " - %s\n" "$$file" >> kustomization.yaml ; \
+	done ; \
  	find "manifests" -maxdepth 1 -type f -print0 | while read  -d $$'\0' -r file; do \
 		printf " - %s\n" "$$file" >> kustomization.yaml ; \
 	done
@@ -25,4 +28,3 @@ update:
 
 clean:
 	rm -rf $(git_dir) $(out_dir)/manifests $(out_dir)/kustomization.yaml
-

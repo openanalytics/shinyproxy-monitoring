@@ -2,6 +2,47 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
+ - manifests/setup/0alertmanagerConfigCustomResourceDefinition.yaml
+ - manifests/setup/0alertmanagerCustomResourceDefinition.yaml
+ - manifests/setup/0podmonitorCustomResourceDefinition.yaml
+ - manifests/setup/0probeCustomResourceDefinition.yaml
+ - manifests/setup/0prometheusCustomResourceDefinition.yaml
+ - manifests/setup/0prometheusruleCustomResourceDefinition.yaml
+ - manifests/setup/0servicemonitorCustomResourceDefinition.yaml
+ - manifests/setup/0thanosrulerCustomResourceDefinition.yaml
+ - manifests/setup/namespace.yaml
+ - manifests/alertmanager-alertmanager.yaml
+ - manifests/alertmanager-podDisruptionBudget.yaml
+ - manifests/alertmanager-prometheusRule.yaml
+ - manifests/alertmanager-secret.yaml
+ - manifests/alertmanager-service.yaml
+ - manifests/alertmanager-serviceAccount.yaml
+ - manifests/alertmanager-serviceMonitor.yaml
+ - manifests/blackboxExporter-clusterRole.yaml
+ - manifests/blackboxExporter-clusterRoleBinding.yaml
+ - manifests/blackboxExporter-configuration.yaml
+ - manifests/blackboxExporter-deployment.yaml
+ - manifests/blackboxExporter-service.yaml
+ - manifests/blackboxExporter-serviceAccount.yaml
+ - manifests/blackboxExporter-serviceMonitor.yaml
+ - manifests/grafana-config.yaml
+ - manifests/grafana-dashboardDatasources.yaml
+ - manifests/grafana-dashboardDefinitions.yaml
+ - manifests/grafana-dashboardSources.yaml
+ - manifests/grafana-deployment.yaml
+ - manifests/grafana-service.yaml
+ - manifests/grafana-serviceAccount.yaml
+ - manifests/grafana-serviceMonitor.yaml
+ - manifests/kubePrometheus-prometheusRule.yaml
+ - manifests/kubeStateMetrics-clusterRole.yaml
+ - manifests/kubeStateMetrics-clusterRoleBinding.yaml
+ - manifests/kubeStateMetrics-deployment.yaml
+ - manifests/kubeStateMetrics-prometheusRule.yaml
+ - manifests/kubeStateMetrics-service.yaml
+ - manifests/kubeStateMetrics-serviceAccount.yaml
+ - manifests/kubeStateMetrics-serviceMonitor.yaml
+ - manifests/kubernetesControlPlane-prometheusRule.yaml
+ - manifests/kubernetesControlPlane-serviceMonitorApiserver.yaml
  - manifests/kubernetesControlPlane-serviceMonitorCoreDNS.yaml
  - manifests/kubernetesControlPlane-serviceMonitorKubeControllerManager.yaml
  - manifests/kubernetesControlPlane-serviceMonitorKubeScheduler.yaml
@@ -45,35 +86,3 @@ resources:
  - manifests/prometheusOperator-service.yaml
  - manifests/prometheusOperator-serviceAccount.yaml
  - manifests/prometheusOperator-serviceMonitor.yaml
- - manifests/kubernetesControlPlane-serviceMonitorApiserver.yaml
- - manifests/kubeStateMetrics-serviceAccount.yaml
- - manifests/kubeStateMetrics-serviceMonitor.yaml
- - manifests/kubernetesControlPlane-prometheusRule.yaml
- - manifests/kubeStateMetrics-service.yaml
- - manifests/kubeStateMetrics-prometheusRule.yaml
- - manifests/kubeStateMetrics-deployment.yaml
- - manifests/kubeStateMetrics-clusterRoleBinding.yaml
- - manifests/alertmanager-alertmanager.yaml
- - manifests/alertmanager-podDisruptionBudget.yaml
- - manifests/alertmanager-prometheusRule.yaml
- - manifests/alertmanager-secret.yaml
- - manifests/alertmanager-service.yaml
- - manifests/alertmanager-serviceAccount.yaml
- - manifests/alertmanager-serviceMonitor.yaml
- - manifests/blackboxExporter-clusterRole.yaml
- - manifests/blackboxExporter-clusterRoleBinding.yaml
- - manifests/blackboxExporter-configuration.yaml
- - manifests/blackboxExporter-deployment.yaml
- - manifests/blackboxExporter-service.yaml
- - manifests/blackboxExporter-serviceAccount.yaml
- - manifests/blackboxExporter-serviceMonitor.yaml
- - manifests/grafana-config.yaml
- - manifests/grafana-dashboardDatasources.yaml
- - manifests/grafana-dashboardDefinitions.yaml
- - manifests/grafana-dashboardSources.yaml
- - manifests/grafana-deployment.yaml
- - manifests/grafana-service.yaml
- - manifests/grafana-serviceAccount.yaml
- - manifests/grafana-serviceMonitor.yaml
- - manifests/kubePrometheus-prometheusRule.yaml
- - manifests/kubeStateMetrics-clusterRole.yaml

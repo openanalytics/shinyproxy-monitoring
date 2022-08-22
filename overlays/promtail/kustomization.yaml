@@ -3,7 +3,7 @@ kind: Kustomization
 
 namespace: loki
 resources:
-  - ../../bases/promtail/base.yaml
+  - ../../bases/promtail
 
 secretGenerator:
   - name: promtail
