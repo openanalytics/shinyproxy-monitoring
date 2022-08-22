@@ -56,6 +56,10 @@ spec:
         display-name: Dash Demo
         port: 8050
         container-image: openanalytics/shinyproxy-dash-demo
+        kubernetes-pod-patches: |
+          - op: replace
+            path: /metadata/namespace
+            value: shinyproxy1-app
       - id: zeppelin
         display-name: Apache Zeppelin
         container-image: apache/zeppelin:0.8.1
@@ -95,3 +99,5 @@ spec:
   image: openanalytics/shinyproxy:2.6.1
   imagePullPolicy: Always
   fqdn: 'operator-demo.local'
+  appNamespaces:
+    - shinyproxy1-app

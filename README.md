@@ -269,8 +269,8 @@ This section demonstrates how to set up this stack in minikube.
 
    **Note:** re-run the command if it fails because it cannot find some CRDs.
 
-You can now log in into shinyproxy on <http://operator-demo/shinyproxy1>
-and <http://operator-demo/shinyproxy2> with the users `jack` and `jeff` (both
+You can now log in into shinyproxy on <http://operator-demo.local/shinyproxy1>
+and <http://operator-demo.local/shinyproxy2> with the users `jack` and `jeff` (both
 have as password `password`). You can log into grafana
 on <http://grafana.shinyproxy-demo.local>.
 

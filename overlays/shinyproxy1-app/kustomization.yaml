@@ -1,0 +1,7 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: shinyproxy1-app
+resources:
+  - resources/shinyproxy1-app.namespace.yaml
+  - resources/shinyproxy.rbac.yaml
+  - resources/shinyproxy-operator.rbac.yaml
