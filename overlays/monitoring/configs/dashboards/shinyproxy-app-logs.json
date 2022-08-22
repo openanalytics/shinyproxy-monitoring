@@ -25,7 +25,7 @@
   "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "iteration": 1657204044521,
+  "iteration": 1660920516562,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -152,16 +152,19 @@
       {
         "current": {},
         "datasource": {
-          "type": "loki",
-          "uid": "${datasource}"
+          "type": "prometheus",
+          "uid": "${prometheus}"
         },
-        "definition": "label_values({sp_realm_id=~\".+\"}, namespace)",
+        "definition": "label_values(kube_pod_annotations{annotation_openanalytics_eu_sp_realm_id=~\".+\"}, namespace)",
         "hide": 0,
         "includeAll": false,
         "multi": false,
         "name": "namespace",
         "options": [],
-        "query": "label_values({sp_realm_id=~\".+\"}, namespace)",
+        "query": {
+          "query": "label_values(kube_pod_annotations{annotation_openanalytics_eu_sp_realm_id=~\".+\"}, namespace)",
+          "refId": "StandardVariableQuery"
+        },
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -171,16 +174,19 @@
       {
         "current": {},
         "datasource": {
-          "type": "loki",
-          "uid": "${datasource}"
+          "type": "prometheus",
+          "uid": "${prometheus}"
         },
-        "definition": "label_values({job=~\".+\", namespace=\"$namespace\"}, sp_realm_id)",
+        "definition": "label_values(kube_pod_annotations{job=~\".+\",namespace=~\"$namespace\"}, annotation_openanalytics_eu_sp_realm_id)",
         "hide": 0,
         "includeAll": false,
         "multi": false,
         "name": "realm",
         "options": [],
-        "query": "label_values({job=~\".+\", namespace=\"$namespace\"}, sp_realm_id)",
+        "query": {
+          "query": "label_values(kube_pod_annotations{job=~\".+\",namespace=~\"$namespace\"}, annotation_openanalytics_eu_sp_realm_id)",
+          "refId": "StandardVariableQuery"
+        },
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -193,16 +199,19 @@
       {
         "current": {},
         "datasource": {
-          "type": "loki",
-          "uid": "${datasource}"
+          "type": "prometheus",
+          "uid": "${prometheus}"
         },
-        "definition": "label_values({job=~\".+\", namespace=\"$namespace\",sp_realm_id=\"$realm\"}, sp_user_id)",
+        "definition": "label_values(kube_pod_annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\"}, annotation_openanalytics_eu_sp_user_id)",
         "hide": 0,
         "includeAll": false,
         "multi": false,
         "name": "user",
         "options": [],
-        "query": "label_values({job=~\".+\", namespace=\"$namespace\",sp_realm_id=\"$realm\"}, sp_user_id)",
+        "query": {
+          "query": "label_values(kube_pod_annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\"}, annotation_openanalytics_eu_sp_user_id)",
+          "refId": "StandardVariableQuery"
+        },
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -215,16 +224,19 @@
       {
         "current": {},
         "datasource": {
-          "type": "loki",
-          "uid": "${datasource}"
+          "type": "prometheus",
+          "uid": "${prometheus}"
         },
-        "definition": "label_values({job=~\".+\",namespace=\"$namespace\",sp_realm_id=\"$realm\",sp_user_id=\"$user\"}, sp_spec_id)",
+        "definition": "label_values(kube_pod_annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_user_id=\"$user\"}, annotation_openanalytics_eu_sp_spec_id)",
         "hide": 0,
         "includeAll": false,
         "multi": false,
         "name": "app",
         "options": [],
-        "query": "label_values({job=~\".+\",namespace=\"$namespace\",sp_realm_id=\"$realm\",sp_user_id=\"$user\"}, sp_spec_id)",
+        "query": {
+          "query": "label_values(kube_pod_annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_user_id=\"$user\"}, annotation_openanalytics_eu_sp_spec_id)",
+          "refId": "StandardVariableQuery"
+        },
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -237,16 +249,19 @@
       {
         "current": {},
         "datasource": {
-          "type": "loki",
-          "uid": "${datasource}"
+          "type": "prometheus",
+          "uid": "${prometheus}"
         },
-        "definition": "label_values({job=~\".+\",namespace=\"$namespace\",sp_realm_id=\"$realm\",sp_user_id=\"$user\", sp_spec_id=\"$app\"}, sp_proxy_instance)",
+        "definition": "label_values(kube_pod_annotations{job=~\".+\", namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_user_id=\"$user\", annotation_openanalytics_eu_sp_spec_id=\"$app\"}, annotation_openanalytics_eu_sp_app_instance)",
         "hide": 0,
         "includeAll": false,
         "multi": false,
         "name": "instance",
         "options": [],
-        "query": "label_values({job=~\".+\",namespace=\"$namespace\",sp_realm_id=\"$realm\",sp_user_id=\"$user\", sp_spec_id=\"$app\"}, sp_proxy_instance)",
+        "query": {
+          "query": "label_values(kube_pod_annotations{job=~\".+\", namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_user_id=\"$user\", annotation_openanalytics_eu_sp_spec_id=\"$app\"}, annotation_openanalytics_eu_sp_app_instance)",
+          "refId": "StandardVariableQuery"
+        },
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -256,16 +271,19 @@
       {
         "current": {},
         "datasource": {
-          "type": "loki",
-          "uid": "${datasource}"
+          "type": "prometheus",
+          "uid": "${prometheus}"
         },
-        "definition": "label_values({job=~\".+\",namespace=\"$namespace\",sp_realm_id=\"$realm\",sp_user_id=\"$user\", sp_spec_id=\"$app\", sp_proxy_instance=\"$instance\"}, sp_proxy_id)",
+        "definition": "label_values(kube_pod_annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_user_id=\"$user\", annotation_openanalytics_eu_sp_spec_id=\"$app\", annotation_openanalytics_eu_sp_app_instance=\"$instance\"}, annotation_openanalytics_eu_sp_proxy_id)",
         "hide": 0,
         "includeAll": false,
         "multi": false,
         "name": "id",
         "options": [],
-        "query": "label_values({job=~\".+\",namespace=\"$namespace\",sp_realm_id=\"$realm\",sp_user_id=\"$user\", sp_spec_id=\"$app\", sp_proxy_instance=\"$instance\"}, sp_proxy_id)",
+        "query": {
+          "query": "label_values(kube_pod_annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_user_id=\"$user\", annotation_openanalytics_eu_sp_spec_id=\"$app\", annotation_openanalytics_eu_sp_app_instance=\"$instance\"}, annotation_openanalytics_eu_sp_proxy_id)",
+          "refId": "StandardVariableQuery"
+        },
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -287,6 +305,20 @@
         "regex": "",
         "skipUrlSync": false,
         "type": "datasource"
+      },
+      {
+        "current": {},
+        "hide": 2,
+        "includeAll": false,
+        "multi": false,
+        "name": "prometheus",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource",
+        "sort": 5
       }
     ]
   },

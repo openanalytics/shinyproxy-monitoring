@@ -14,3 +14,4 @@ spec:
         - --telemetry-host=127.0.0.1
         - --telemetry-port=8082
         - --metric-annotations-allowlist=pods=[openanalytics.eu/sp-spec-id,openanalytics.eu/sp-user-id,openanalytics.eu/sp-realm-id,openanalytics.eu/sp-app-instance,openanalytics.eu/sp-proxy-id,openanalytics.eu/sp-proxy-created-timestamp]
+        - --metric-labels-allowlist=pods=[app]

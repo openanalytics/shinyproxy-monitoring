@@ -24,7 +24,7 @@
   "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "iteration": 1657192168804,
+  "iteration": 1660907678203,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -210,16 +210,19 @@
       {
         "current": {},
         "datasource": {
-          "type": "loki",
-          "uid": "${datasource}"
+          "type": "prometheus",
+          "uid": "${prometheus}"
         },
-        "definition": "label_values({job=~\".+\",sp_realm_id=~\".+\"}, namespace)",
+        "definition": "label_values(absolute_users_logged_in{shinyproxy_realm=~\".+\"}, namespace)",
         "hide": 0,
         "includeAll": false,
         "multi": false,
         "name": "namespace",
         "options": [],
-        "query": "label_values({job=~\".+\",sp_realm_id=~\".+\"}, namespace)",
+        "query": {
+          "query": "label_values(absolute_users_logged_in{shinyproxy_realm=~\".+\"}, namespace)",
+          "refId": "StandardVariableQuery"
+        },
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -229,16 +232,19 @@
       {
         "current": {},
         "datasource": {
-          "type": "loki",
-          "uid": "${datasource}"
+          "type": "prometheus",
+          "uid": "${prometheus}"
         },
-        "definition": "label_values({job=~\".+\",namespace=\"$namespace\"}, sp_realm_id)",
+        "definition": "label_values(absolute_users_logged_in{namespace=~\"$namespace\"}, shinyproxy_realm)",
         "hide": 0,
         "includeAll": false,
         "multi": false,
         "name": "realm",
         "options": [],
-        "query": "label_values({job=~\".+\",namespace=\"$namespace\"}, sp_realm_id)",
+        "query": {
+          "query": "label_values(absolute_users_logged_in{namespace=~\"$namespace\"}, shinyproxy_realm)",
+          "refId": "StandardVariableQuery"
+        },
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -249,16 +255,19 @@
         "allValue": ".*",
         "current": {},
         "datasource": {
-          "type": "loki",
-          "uid": "${datasource}"
+          "type": "prometheus",
+          "uid": "${prometheus}"
         },
-        "definition": "label_values({job=~\".+\",namespace=\"$namespace\", sp_realm_id=\"$realm\"}, sp_instance)",
+        "definition": "label_values(absolute_users_logged_in{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\"}, shinyproxy_instance)",
         "hide": 0,
         "includeAll": true,
         "multi": true,
         "name": "instance",
         "options": [],
-        "query": "label_values({job=~\".+\",namespace=\"$namespace\", sp_realm_id=\"$realm\"}, sp_instance)",
+        "query": {
+          "query": "label_values(absolute_users_logged_in{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\"}, shinyproxy_instance)",
+          "refId": "StandardVariableQuery"
+        },
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -312,18 +321,33 @@
         "queryValue": "",
         "skipUrlSync": false,
         "type": "custom"
+      },
+      {
+        "current": {},
+        "hide": 2,
+        "includeAll": false,
+        "multi": false,
+        "name": "prometheus",
+        "options": [],
+        "query": "prometheus",
+        "queryValue": "",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 5,
+        "type": "datasource"
       }
     ]
   },
   "time": {
     "from": "now-30m",
-    "to": "now",
-    "timezone": "browser"
+    "timezone": "browser",
+    "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "ShinyProxy Logs",
   "uid": "shinyproxy-logs",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
