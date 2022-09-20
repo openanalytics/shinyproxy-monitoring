@@ -51,27 +51,14 @@ spec:
           WWW_ROOT_PATH: "#{proxy.getRuntimeValue('SHINYPROXY_PUBLIC_PATH')}"
         port: 8787
         max-instances: 5
-        container-memory-limit: 1Gi
-        container-cpu-limit: 0.5
       - id: dash-demo
         display-name: Dash Demo
         port: 8050
         container-image: openanalytics/shinyproxy-dash-demo
-      - id: zeppelin
-        display-name: Apache Zeppelin
-        container-image: apache/zeppelin:0.8.1
-        port: 8080
-      - id: nutrition
-        display-name: Nutrition Calculator
-        container-image: ledfan/shinyporxy-nutrient:latest
-      - id: jupyter-notebook
-        display-name: Jupyter Notebook Lab
-        container-cmd: ["start-notebook.sh", "--NotebookApp.token=''", "--NotebookApp.base_url=#{proxy.getRuntimeValue('SHINYPROXY_PUBLIC_PATH')}"]
-        container-image: jupyter/base-notebook
-        port: 8888
-        target-path: "#{proxy.getRuntimeValue('SHINYPROXY_PUBLIC_PATH')}"
-        container-env:
-          JUPYTER_ENABLE_LAB: yes
+        kubernetes-pod-patches: |
+          - op: replace
+            path: /metadata/namespace
+            value: shinyproxy1-app
       - id: 01_hello
         display-name: Hello Application
         description: Application which demonstrates the basics of a Shiny app
