@@ -25,7 +25,7 @@
   "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "iteration": 1660920516562,
+  "iteration": 1672412102815,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -135,8 +135,19 @@
             "type": "loki",
             "uid": "${datasource}"
           },
-          "expr": "{sp_realm_id=~\".+\", namespace=\"$namespace\", sp_realm_id=\"$realm\", sp_user_id=\"$user\", sp_spec_id=\"$app\", sp_proxy_instance=\"$instance\", sp_proxy_id=\"$id\", sp_proxy_id!=\"\"} ",
+          "expr": "{sp_realm_id=~\".+\", namespace=\"$namespace\", sp_realm_id=\"$realm\", sp_user_id=\"$user\", sp_spec_id=\"$app\", sp_proxy_instance=\"$instance\", sp_proxy_id=\"$id\", sp_proxy_id!=\"\"} | line_format `[App]: {{ __line__ }}` ",
+          "legendFormat": "",
           "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "${datasource}"
+          },
+          "expr": "{app=\"shinyproxy\", namespace=\"$namespace\", sp_realm_id=\"$realm\"} | json | proxyId=\"$id\" | line_format `[ShinyProxy] {{.level}}: {{.message}} {{.stack_trace}}`",
+          "hide": false,
+          "legendFormat": "",
+          "refId": "B"
         }
       ],
       "title": "Logs",
@@ -317,8 +328,8 @@
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
-        "type": "datasource",
-        "sort": 5
+        "sort": 5,
+        "type": "datasource"
       }
     ]
   },

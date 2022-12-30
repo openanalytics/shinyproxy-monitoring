@@ -24,7 +24,7 @@
   "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "iteration": 1660907678203,
+  "iteration": 1672409007157,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -82,7 +82,7 @@
             "type": "loki",
             "uid": "${datasource}"
           },
-          "expr": "sum(count_over_time(({app=\"shinyproxy\", namespace=\"$namespace\", sp_realm_id=\"$realm\", sp_instance=~\"$instance\"} | regexp \".*(?P<level>(DEBUG)|(INFO)|(WARN)|(ERROR)).*\" | level=\"WARN\")[$__interval]))",
+          "expr": "sum(count_over_time(({app=\"shinyproxy\", namespace=\"$namespace\", sp_realm_id=\"$realm\", sp_instance=~\"$instance\"} | json | level=\"WARN\")[$__interval]))",
           "queryType": "range",
           "refId": "A"
         }
@@ -144,7 +144,7 @@
             "type": "loki",
             "uid": "${datasource}"
           },
-          "expr": "sum(count_over_time(({app=\"shinyproxy\", namespace=\"$namespace\", sp_realm_id=\"$realm\", sp_instance=~\"$instance\"} | regexp \".*(?P<level>(DEBUG)|(INFO)|(WARN)|(ERROR)).*\" | level=\"ERROR\")[$__interval]))",
+          "expr": "sum(count_over_time(({app=\"shinyproxy\", namespace=\"$namespace\", sp_realm_id=\"$realm\", sp_instance=~\"$instance\"} | json | level=\"ERROR\")[$__interval]))",
           "queryType": "range",
           "refId": "A"
         }
@@ -170,7 +170,7 @@
         "prettifyLogMessage": false,
         "showCommonLabels": false,
         "showLabels": false,
-        "showTime": false,
+        "showTime": true,
         "sortOrder": "Ascending",
         "wrapLogMessage": true
       },
@@ -180,7 +180,7 @@
             "type": "loki",
             "uid": "${datasource}"
           },
-          "expr": "{app=\"shinyproxy\", namespace=\"$namespace\", sp_realm_id=\"$realm\", sp_instance=~\"$instance\"} | regexp \".*(?P<level>(DEBUG)|(INFO)|(WARN)|(ERROR)).*\" | level=~\"$level\"",
+          "expr": "{app=\"shinyproxy\", namespace=\"$namespace\", sp_realm_id=\"$realm\", sp_instance=~\"$instance\"} | json | line_format `{{.level}} [{{ printf \"%15.15s\" .thread_name}}] {{ printf \"%-40.40s\" .logger_name}}: {{.message}} {{.stack_trace}}`",
           "refId": "A"
         }
       ],
@@ -348,6 +348,6 @@
   "timezone": "browser",
   "title": "ShinyProxy Logs",
   "uid": "shinyproxy-logs",
-  "version": 2,
+  "version": 1,
   "weekStart": ""
 }

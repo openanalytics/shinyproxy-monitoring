@@ -12,7 +12,7 @@ dashboard["time"]["timezone"] = "browser"
 
 for panel in dashboard["panels"]:
     datasource = panel["datasource"]['uid']
-    if datasource != "${datasource}":
+    if datasource != "${datasource}" and datasource != "${prometheus}":
         print("ERROR: found panel with invalid datasource, must use variable", panel["title"])
         sys.exit(10)
 
@@ -29,7 +29,7 @@ for template in dashboard["templating"]["list"]:
         template["refresh"] = 2
         template["sort"] = 5
 
-    if "datasource" in template and template["datasource"]["uid"] != "${datasource}":
+    if "datasource" in template and template["datasource"]["uid"] != "${datasource}" and template["datasource"]["uid"] != "${prometheus}":
         print("ERROR: found panel with invalid datasource, must use variable")
         sys.exit(10)
 
