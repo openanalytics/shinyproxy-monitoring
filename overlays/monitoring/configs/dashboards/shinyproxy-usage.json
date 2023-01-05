@@ -24,10 +24,24 @@
   "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "iteration": 1659369734231,
+  "id": 32,
+  "iteration": 1672920982583,
   "links": [],
   "liveNow": false,
   "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 29,
+      "panels": [],
+      "title": "Startup Time",
+      "type": "row"
+    },
     {
       "aliasColors": {},
       "bars": false,
@@ -43,7 +57,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 0
+        "y": 1
       },
       "hiddenSeries": false,
       "id": 2,
@@ -127,6 +141,424 @@
       }
     },
     {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "id": 23,
+      "panels": [],
+      "title": "Fine-grained timings",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fill": 6,
+      "fillGradient": 9,
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 10
+      },
+      "hiddenSeries": false,
+      "id": 18,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "hideEmpty": true,
+        "hideZero": false,
+        "max": true,
+        "min": true,
+        "rightSide": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": false,
+      "linewidth": 0,
+      "links": [],
+      "nullPointMode": "connected",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.5.6",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "sum(rate(containerScheduleTime_seconds_sum{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\",spec_id=~\"$spec_id\"}[$__rate_interval])) by (spec_id) / sum(rate(containerScheduleTime_seconds_count{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\",spec_id=~\"$spec_id\"}[$__rate_interval])) by (spec_id) ",
+          "format": "time_series",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{spec_id}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Container Schedule Time",
+      "tooltip": {
+        "shared": false,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:164",
+          "format": "s",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:165",
+          "format": "s",
+          "logBase": 1,
+          "min": "0",
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fill": 6,
+      "fillGradient": 9,
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 18
+      },
+      "hiddenSeries": false,
+      "id": 16,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "hideEmpty": true,
+        "hideZero": true,
+        "max": true,
+        "min": true,
+        "rightSide": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": false,
+      "linewidth": 0,
+      "links": [],
+      "nullPointMode": "connected",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.5.6",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "sum(rate(imagePullTime_seconds_sum{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\",spec_id=~\"$spec_id\"}[$__rate_interval])) by (spec_id) / sum(rate(imagePullTime_seconds_count{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\",spec_id=~\"$spec_id\"}[$__rate_interval])) by (spec_id)",
+          "format": "time_series",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{spec_id}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Image Pull Time",
+      "tooltip": {
+        "shared": false,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:164",
+          "format": "s",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:165",
+          "format": "s",
+          "logBase": 1,
+          "min": "0",
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fill": 6,
+      "fillGradient": 9,
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 26
+      },
+      "hiddenSeries": false,
+      "id": 15,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "hideEmpty": true,
+        "hideZero": true,
+        "max": true,
+        "min": true,
+        "rightSide": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": false,
+      "linewidth": 0,
+      "links": [],
+      "nullPointMode": "connected",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.5.6",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "(sum(rate(containerStartupTime_seconds_sum{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\",spec_id=~\"$spec_id\"}[$__rate_interval])) by (spec_id) / sum(rate(containerStartupTime_seconds_count{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\",spec_id=~\"$spec_id\"}[$__rate_interval])) by (spec_id)) - (sum(rate(imagePullTime_seconds_sum{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\",spec_id=~\"$spec_id\"}[$__rate_interval])) by (spec_id) / sum(rate(imagePullTime_seconds_count{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\",spec_id=~\"$spec_id\"}[$__rate_interval])) by (spec_id)) - (sum(rate(containerScheduleTime_seconds_sum{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\",spec_id=~\"$spec_id\"}[$__rate_interval])) by (spec_id) / sum(rate(containerScheduleTime_seconds_count{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\",spec_id=~\"$spec_id\"}[$__rate_interval])) by (spec_id) )",
+          "format": "time_series",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{spec_id}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Container Initialization Time",
+      "tooltip": {
+        "shared": false,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:164",
+          "format": "s",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:165",
+          "format": "s",
+          "logBase": 1,
+          "min": "0",
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fill": 6,
+      "fillGradient": 9,
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 34
+      },
+      "hiddenSeries": false,
+      "id": 19,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "hideEmpty": true,
+        "hideZero": true,
+        "max": true,
+        "min": true,
+        "rightSide": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": false,
+      "linewidth": 0,
+      "links": [],
+      "nullPointMode": "connected",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "8.5.6",
+      "pointradius": 2,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "sum(rate(applicationStartupTime_seconds_sum{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\",spec_id=~\"$spec_id\"}[$__rate_interval])) by (spec_id) / sum(rate(applicationStartupTime_seconds_count{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\",spec_id=~\"$spec_id\"}[$__rate_interval])) by (spec_id)",
+          "format": "time_series",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{spec_id}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeRegions": [],
+      "title": "Application Startup Time",
+      "tooltip": {
+        "shared": false,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "mode": "time",
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:164",
+          "format": "s",
+          "logBase": 1,
+          "min": "0",
+          "show": true
+        },
+        {
+          "$$hashKey": "object:165",
+          "format": "s",
+          "logBase": 1,
+          "min": "0",
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false
+      }
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 42
+      },
+      "id": 27,
+      "panels": [],
+      "title": "Usage",
+      "type": "row"
+    },
+    {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
@@ -141,7 +573,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 8
+        "y": 43
       },
       "hiddenSeries": false,
       "id": 3,
@@ -240,7 +672,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 16
+        "y": 51
       },
       "hiddenSeries": false,
       "id": 13,
@@ -337,7 +769,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 24
+        "y": 59
       },
       "hiddenSeries": false,
       "id": 12,
@@ -430,7 +862,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 24
+        "y": 59
       },
       "hiddenSeries": false,
       "id": 14,
@@ -509,6 +941,19 @@
       }
     },
     {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 67
+      },
+      "id": 25,
+      "panels": [],
+      "title": "Errors",
+      "type": "row"
+    },
+    {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
@@ -523,7 +968,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 32
+        "y": 68
       },
       "hiddenSeries": false,
       "id": 9,
@@ -614,7 +1059,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 32
+        "y": 68
       },
       "hiddenSeries": false,
       "id": 7,
