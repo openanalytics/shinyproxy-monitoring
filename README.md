@@ -15,12 +15,26 @@ The retention of both Loki and Prometheus is set to 90 days.
 
 ### ShinyProxy Usage
 
-[**Screenshot**](.github/screenshots/shinyproxy-usage.png)
+[**Screenshot**](https://raw.githubusercontent.com/openanalytics/shinyproxy-monitoring/master/.github/screenshots/shinyproxy-usage.png)
+[**Screenshot (continued)**](https://raw.githubusercontent.com/openanalytics/shinyproxy-monitoring/master/.github/screenshots/shinyproxy-usage2.png)
 
 - **Datasource:** Prometheus
 - **Goal:** provide inside in the *current* usage and performance of ShinyProxy.
 - **Provided statistics**:
     - App Startup Time
+    - Fine-grained timings
+      - Container schedule time (available on Kubernetes): the time needed for
+        the container to get assigned to a node. Includes the time to launch a
+        new node if the cluster needs to scale-up.
+      - Image pull time (available on Docker and Kubernetes)
+      - Container initialization time (available on Docker, Docker Swarm and
+        Kubernetes): any time needed to start the app which is not part
+        of the other metrics
+      - Application Startup time (available on Docker, Docker swarm and
+        Kubernetes): the time between the start the application process and when
+        the app is reachable by ShinyProxy. For example, in the case of the
+        Shiny app, this is the time the R process takes to startup and be
+        reachable on its webserver.
     - App Usage Time
     - Number of running apps (per app name)
     - Number of logged-in users
@@ -28,13 +42,9 @@ The retention of both Loki and Prometheus is set to 90 days.
     - Number of auth failures
     - Number of app start failures
 
-**Note**: the next version of ShinyProxy will provide more detailed metrics for
-the startup time. For example, the time it took to pull the Docker image or to
-schedule the container etc.
-
 ### ShinyProxy Aggregated Usage
 
-[**Screenshot**](.github/screenshots/shinyproxy-aggregated-usage.png)
+[**Screenshot**](https://raw.githubusercontent.com/openanalytics/shinyproxy-monitoring/master/.github/screenshots/shinyproxy-aggregated-usage.png)
 
 - **Datasource:** Prometheus
 - **Goal:** provide inside in the *long-term* usage and performance of
@@ -46,7 +56,7 @@ schedule the container etc.
 
 ### ShinyProxy logs
 
-[**Screenshot**](.github/screenshots/shinyproxy-logs.png)
+[**Screenshot**](https://raw.githubusercontent.com/openanalytics/shinyproxy-monitoring/master/.github/screenshots/shinyproxy-logs.png)
 
 - **Datasource:** Loki
 - **Goal:** show the logs of the ShinyProxy server
@@ -54,13 +64,12 @@ schedule the container etc.
     - Number of warnings
     - Number of errors
 
-**Note:** promtail is configured such that it recognizes when Java outputs a stack
-trace and therefore collects this as a single log message. We could improve and
-optimize this by adding an option to ShinyProxy to log to JSON.
+**Note:** This requires ShinyProxy to log using
+the [JSON format](https://shinyproxy.io/documentation/configuration/#json-logstash-logging).
 
 ### ShinyProxy Operator Logs
 
-[**Screenshot**](.github/screenshots/shinyproxy-operator-logs.png)
+[**Screenshot**](https://raw.githubusercontent.com/openanalytics/shinyproxy-monitoring/master/.github/screenshots/shinyproxy-operator-logs.png)
 
 - **Datasource:** Loki
 - **Goal:** show the logs of the ShinyProxy Operator
@@ -74,7 +83,8 @@ optimize this by adding an option to the ShinyProxy Operator to log to JSON.
 
 ### ShinyProxy App Logs
 
-[**Screenshot**](.github/screenshots/shinyproxy-app-logs.png)
+[**Screenshot**](https://raw.githubusercontent.com/openanalytics/shinyproxy-monitoring/master/.github/screenshots/shinyproxy-app-logs.png)
+[**Screenshot (error)**](https://raw.githubusercontent.com/openanalytics/shinyproxy-monitoring/master/.github/screenshots/shinyproxy-app-logs2.png)
 
 - **Datasource:** Loki
 - **Goal:** show the logs of any app started by ShinyProxy.
@@ -86,9 +96,12 @@ optimize this by adding an option to the ShinyProxy Operator to log to JSON.
 than the namespace of the ShinyProxy server. As an example, the Dash application
 in ShinyProxy 1 runs in a different namespace.
 
+**Note:** this dashboard also shows parts of the ShinyProxy log that are
+relevant for this app.
+
 ### ShinyProxy App Resources
 
-[**Screenshot**](.github/screenshots/shinyproxy-app-resources.png)
+[**Screenshot**](https://raw.githubusercontent.com/openanalytics/shinyproxy-monitoring/master/.github/screenshots/shinyproxy-app-resources.png)
 
 - **Datasource:** Prometheus
 - **Goal:** show the resources (CPU, Memory, Network) used by any app started by
@@ -116,8 +129,6 @@ configuration of Promtail must be changed to better work with ShinyProxy. See
 the [`overlays/promtail/configs/promtail.yaml`](overlays/promtail/configs/promtail.yaml)
 file. Some important changes are:
 
-* in `pipeline_changes` the pipeline was changed to use `docker` instead
-  of `CRI`. This depends on the Container Runtime that is used by Kubernetes.
 * in the `kubernetes-pods` scrape_config an extra section was added to not
   process any logs of ShinyProxy or the ShinyProxy operator. These logs are
   processed by the `shinyproxy-and-operator-pods` job.
