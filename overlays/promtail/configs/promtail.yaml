@@ -14,6 +14,7 @@ scrape_configs:
   - job_name: kubernetes-pods
     pipeline_stages:
       - docker: { }
+      - cri: {}
     kubernetes_sd_configs:
       - role: pod
     relabel_configs:
@@ -109,6 +110,7 @@ scrape_configs:
   - job_name: shinyproxy-and-operator-pods
     pipeline_stages:
       - docker: { }
+      - cri: {}
       - multiline:
           firstline: ".* (DEBUG)|(INFO)|(ERROR)|(WARN)"
     kubernetes_sd_configs:
@@ -186,7 +188,7 @@ scrape_configs:
           - __meta_kubernetes_pod_container_name
         target_label: __path__
       - action: replace
-        source_labels: [ __meta_kubernetes_pod_label_openanalytics_eu_sp_resource_name ]
+        source_labels: [ __meta_kubernetes_pod_label_openanalytics_eu_sp_realm_id ]
         target_label: sp_realm_id
       - action: replace
         source_labels: [ __meta_kubernetes_pod_label_openanalytics_eu_sp_instance ]
