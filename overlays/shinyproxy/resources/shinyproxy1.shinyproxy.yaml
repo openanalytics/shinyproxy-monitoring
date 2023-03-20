@@ -18,13 +18,14 @@ spec:
       redis:
         configure-action: none
     redis:
-      host: redis
       password: ${REDIS_PASSWORD}
-      database: 2
+      sentinel:
+        master: shinyproxy
+        password: ${REDIS_PASSWORD}
+        nodes: redis-node-0.redis-headless:26379, redis-node-1.redis-headless:26379, redis-node-2.redis-headless:26379
   proxy:
     usage-stats-url: micrometer
-    operator:
-      force-transfer: true
+    store-mode: Redis
     defaultMaxInstances: -1
     title: Open Analytics Shiny Proxy
     logo-url: https://www.openanalytics.eu/shinyproxy/logo.png
@@ -77,8 +78,8 @@ spec:
         name: REDIS_PASSWORD
         valueFrom:
           secretKeyRef:
-            name: redis-password
-            key: password
+            name: redis
+            key: redis-password
     - op: add
       path: /spec/containers/0/resources
       value:
@@ -89,7 +90,17 @@ spec:
     - op: add
       path: /spec/serviceAccountName
       value: shinyproxy-sa
-  image: openanalytics/shinyproxy:2.6.1
+  kubernetesIngressPatches: |
+    - op: add
+      path: /metadata/annotations
+      value:
+        nginx.ingress.kubernetes.io/proxy-buffer-size: "128k"
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/proxy-body-size: 300m
+    - op: add
+      path: /spec/ingressClassName
+      value: nginx
+  image: openanalytics/shinyproxy:3.0.0
   imagePullPolicy: Always
   fqdn: 'operator-demo.local'
   appNamespaces:
