@@ -10,4 +10,4 @@ resources:
   - resources/shinyproxy2.shinyproxy.yaml
 
 patchesStrategicMerge:
-  - patches/shinyproxy-operator-role rules.role.yaml
+  - patches/shinyproxy-operator-role.role.yaml

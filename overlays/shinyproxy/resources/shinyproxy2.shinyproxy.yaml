@@ -1,4 +1,4 @@
-apiVersion: openanalytics.eu/v1alpha1
+apiVersion: openanalytics.eu/v1
 kind: ShinyProxy
 metadata:
   name: shinyproxy2
@@ -15,8 +15,6 @@ spec:
   spring:
     session:
       store-type: redis
-      redis:
-        configure-action: none
     redis:
       password: ${REDIS_PASSWORD}
       sentinel:
