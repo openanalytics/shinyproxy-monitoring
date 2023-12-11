@@ -6,12 +6,16 @@ resources:
   - resources/monitoring.ingress.yaml
   - resources/grafana-storage.pvc.yaml
   - resources/shinyproxy.servicemonitor.yaml
+  - resources/shinyproxy.prometheus-rule.yaml
 
 patchesStrategicMerge:
   - patches/grafana.deployment.yaml
   - patches/kubeStateMetrics-deployment.yaml
   - patches/prometheus.prometheus.yaml
   - patches/alertmanager.alertmanager.yaml
+
+components:
+  - components/container-sharing
 
 patches:
   - target:

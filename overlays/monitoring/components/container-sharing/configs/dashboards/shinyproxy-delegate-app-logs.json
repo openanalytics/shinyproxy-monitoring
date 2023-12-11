@@ -25,7 +25,8 @@
   "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "iteration": 1702303923675,
+  "id": 32,
+  "iteration": 1702304513303,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -135,7 +136,7 @@
             "type": "loki",
             "uid": "${datasource}"
           },
-          "expr": "{sp_realm_id=~\".+\", namespace=\"$namespace\", sp_realm_id=\"$realm\", sp_user_id=\"$user\", sp_spec_id=\"$app\", sp_proxy_instance=\"$instance\", sp_proxy_id=\"$id\", sp_proxy_id!=\"\"} | line_format `[App]: {{ __line__ }}` ",
+          "expr": "{sp_realm_id=~\".+\", namespace=\"$namespace\", sp_realm_id=\"$realm\", sp_spec_id=\"$app\", sp_proxy_id=\"$id\", sp_proxy_id!=\"\"} | line_format `[App]: {{ __line__ }}` ",
           "legendFormat": "",
           "refId": "A"
         },
@@ -144,7 +145,7 @@
             "type": "loki",
             "uid": "${datasource}"
           },
-          "expr": "{app=\"shinyproxy\", namespace=\"$namespace\", sp_realm_id=\"$realm\"} | json | proxyId=\"$id\" | line_format `[ShinyProxy] {{.level}}: {{.message}} {{.stack_trace}}`",
+          "expr": "{app=\"shinyproxy\", namespace=\"$namespace\", sp_realm_id=\"$realm\"} | json | delegateProxyId=\"$id\" | line_format `[ShinyProxy] {{.level}}: {{.message}} {{.stack_trace}}`",
           "hide": false,
           "legendFormat": "",
           "refId": "B"
@@ -166,14 +167,14 @@
           "type": "prometheus",
           "uid": "${prometheus}"
         },
-        "definition": "label_values(shinyproxy:proxied_app:annotations{}, namespace)",
+        "definition": "label_values(shinyproxy:delegate_app:annotations{annotation_openanalytics_eu_sp_realm_id=~\".+\"}, namespace)",
         "hide": 0,
         "includeAll": false,
         "multi": false,
         "name": "namespace",
         "options": [],
         "query": {
-          "query": "label_values(shinyproxy:proxied_app:annotations{}, namespace)",
+          "query": "label_values(shinyproxy:delegate_app:annotations{annotation_openanalytics_eu_sp_realm_id=~\".+\"}, namespace)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -188,14 +189,14 @@
           "type": "prometheus",
           "uid": "${prometheus}"
         },
-        "definition": "label_values(shinyproxy:proxied_app:annotations{job=~\".+\",namespace=~\"$namespace\"}, annotation_openanalytics_eu_sp_realm_id)",
+        "definition": "label_values(shinyproxy:delegate_app:annotations{job=~\".+\",namespace=~\"$namespace\"}, annotation_openanalytics_eu_sp_realm_id)",
         "hide": 0,
         "includeAll": false,
         "multi": false,
         "name": "realm",
         "options": [],
         "query": {
-          "query": "label_values(shinyproxy:proxied_app:annotations{job=~\".+\",namespace=~\"$namespace\"}, annotation_openanalytics_eu_sp_realm_id)",
+          "query": "label_values(shinyproxy:delegate_app:annotations{job=~\".+\",namespace=~\"$namespace\"}, annotation_openanalytics_eu_sp_realm_id)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -213,39 +214,14 @@
           "type": "prometheus",
           "uid": "${prometheus}"
         },
-        "definition": "label_values(shinyproxy:proxied_app:annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\"}, annotation_openanalytics_eu_sp_user_id)",
-        "hide": 0,
-        "includeAll": false,
-        "multi": false,
-        "name": "user",
-        "options": [],
-        "query": {
-          "query": "label_values(shinyproxy:proxied_app:annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\"}, annotation_openanalytics_eu_sp_user_id)",
-          "refId": "StandardVariableQuery"
-        },
-        "refresh": 2,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 5,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "current": {},
-        "datasource": {
-          "type": "prometheus",
-          "uid": "${prometheus}"
-        },
-        "definition": "label_values(shinyproxy:proxied_app:annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_user_id=\"$user\"}, annotation_openanalytics_eu_sp_spec_id)",
+        "definition": "label_values(shinyproxy:delegate_app:annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\"}, annotation_openanalytics_eu_sp_spec_id)",
         "hide": 0,
         "includeAll": false,
         "multi": false,
         "name": "app",
         "options": [],
         "query": {
-          "query": "label_values(shinyproxy:proxied_app:annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_user_id=\"$user\"}, annotation_openanalytics_eu_sp_spec_id)",
+          "query": "label_values(shinyproxy:delegate_app:annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\"}, annotation_openanalytics_eu_sp_spec_id)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -263,36 +239,14 @@
           "type": "prometheus",
           "uid": "${prometheus}"
         },
-        "definition": "label_values(shinyproxy:proxied_app:annotations{job=~\".+\", namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_user_id=\"$user\", annotation_openanalytics_eu_sp_spec_id=\"$app\"}, annotation_openanalytics_eu_sp_app_instance)",
-        "hide": 0,
-        "includeAll": false,
-        "multi": false,
-        "name": "instance",
-        "options": [],
-        "query": {
-          "query": "label_values(shinyproxy:proxied_app:annotations{job=~\".+\", namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_user_id=\"$user\", annotation_openanalytics_eu_sp_spec_id=\"$app\"}, annotation_openanalytics_eu_sp_app_instance)",
-          "refId": "StandardVariableQuery"
-        },
-        "refresh": 2,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 5,
-        "type": "query"
-      },
-      {
-        "current": {},
-        "datasource": {
-          "type": "prometheus",
-          "uid": "${prometheus}"
-        },
-        "definition": "label_values(shinyproxy:proxied_app:annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_user_id=\"$user\", annotation_openanalytics_eu_sp_spec_id=\"$app\", annotation_openanalytics_eu_sp_app_instance=\"$instance\"}, annotation_openanalytics_eu_sp_proxy_id)",
+        "definition": "label_values(shinyproxy:delegate_app:annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\",annotation_openanalytics_eu_sp_spec_id=\"$app\"}, annotation_openanalytics_eu_sp_proxy_id)",
         "hide": 0,
         "includeAll": false,
         "multi": false,
         "name": "id",
         "options": [],
         "query": {
-          "query": "label_values(shinyproxy:proxied_app:annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_user_id=\"$user\", annotation_openanalytics_eu_sp_spec_id=\"$app\", annotation_openanalytics_eu_sp_app_instance=\"$instance\"}, annotation_openanalytics_eu_sp_proxy_id)",
+          "query": "label_values(shinyproxy:delegate_app:annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\",annotation_openanalytics_eu_sp_spec_id=\"$app\"}, annotation_openanalytics_eu_sp_proxy_id)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -353,8 +307,8 @@
     ]
   },
   "timezone": "browser",
-  "title": "ShinyProxy App Logs",
-  "uid": "shinyproxy-app-logs",
-  "version": 1,
+  "title": "ShinyProxy Delegate App Logs",
+  "uid": "shinyproxy-delegate-app-logs",
+  "version": 3,
   "weekStart": ""
 }

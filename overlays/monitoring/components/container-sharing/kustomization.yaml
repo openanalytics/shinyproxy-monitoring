@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+configMapGenerator:
+  - name: grafana-shinyproxy-dashboards
+    namespace: monitoring
+    behavior: merge
+    files:
+      - configs/dashboards/shinyproxy-delegate-app-logs.json
+      - configs/dashboards/shinyproxy-delegate-app-resources.json

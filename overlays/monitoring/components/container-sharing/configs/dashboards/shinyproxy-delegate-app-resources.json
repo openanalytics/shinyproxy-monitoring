@@ -25,7 +25,8 @@
   "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "iteration": 1702304273538,
+  "id": 33,
+  "iteration": 1702306668687,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -752,14 +753,14 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values(shinyproxy:proxied_app:annotations{annotation_openanalytics_eu_sp_realm_id=~\".+\"}, namespace)",
+        "definition": "label_values(shinyproxy:delegate_app:annotations{annotation_openanalytics_eu_sp_realm_id=~\".+\"}, namespace)",
         "hide": 0,
         "includeAll": false,
         "multi": false,
         "name": "namespace",
         "options": [],
         "query": {
-          "query": "label_values(shinyproxy:proxied_app:annotations{annotation_openanalytics_eu_sp_realm_id=~\".+\"}, namespace)",
+          "query": "label_values(shinyproxy:delegate_app:annotations{annotation_openanalytics_eu_sp_realm_id=~\".+\"}, namespace)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -774,14 +775,14 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values(shinyproxy:proxied_app:annotations{job=~\".+\",namespace=~\"$namespace\"}, annotation_openanalytics_eu_sp_realm_id)",
+        "definition": "label_values(shinyproxy:delegate_app:annotations{job=~\".+\",namespace=~\"$namespace\"}, annotation_openanalytics_eu_sp_realm_id)",
         "hide": 0,
         "includeAll": false,
         "multi": false,
         "name": "realm",
         "options": [],
         "query": {
-          "query": "label_values(shinyproxy:proxied_app:annotations{job=~\".+\",namespace=~\"$namespace\"}, annotation_openanalytics_eu_sp_realm_id)",
+          "query": "label_values(shinyproxy:delegate_app:annotations{job=~\".+\",namespace=~\"$namespace\"}, annotation_openanalytics_eu_sp_realm_id)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -799,39 +800,14 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values(shinyproxy:proxied_app:annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\"}, annotation_openanalytics_eu_sp_user_id)",
-        "hide": 0,
-        "includeAll": false,
-        "multi": false,
-        "name": "user",
-        "options": [],
-        "query": {
-          "query": "label_values(shinyproxy:proxied_app:annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\"}, annotation_openanalytics_eu_sp_user_id)",
-          "refId": "StandardVariableQuery"
-        },
-        "refresh": 2,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 5,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "current": {},
-        "datasource": {
-          "type": "prometheus",
-          "uid": "${datasource}"
-        },
-        "definition": "label_values(shinyproxy:proxied_app:annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_user_id=\"$user\"}, annotation_openanalytics_eu_sp_spec_id)",
+        "definition": "label_values(shinyproxy:delegate_app:annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\"}, annotation_openanalytics_eu_sp_spec_id)",
         "hide": 0,
         "includeAll": false,
         "multi": false,
         "name": "app",
         "options": [],
         "query": {
-          "query": "label_values(shinyproxy:proxied_app:annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_user_id=\"$user\"}, annotation_openanalytics_eu_sp_spec_id)",
+          "query": "label_values(shinyproxy:delegate_app:annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\"}, annotation_openanalytics_eu_sp_spec_id)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -849,36 +825,14 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values(shinyproxy:proxied_app:annotations{job=~\".+\", namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_user_id=\"$user\", annotation_openanalytics_eu_sp_spec_id=\"$app\"}, annotation_openanalytics_eu_sp_app_instance)",
-        "hide": 0,
-        "includeAll": false,
-        "multi": false,
-        "name": "instance",
-        "options": [],
-        "query": {
-          "query": "label_values(shinyproxy:proxied_app:annotations{job=~\".+\", namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_user_id=\"$user\", annotation_openanalytics_eu_sp_spec_id=\"$app\"}, annotation_openanalytics_eu_sp_app_instance)",
-          "refId": "StandardVariableQuery"
-        },
-        "refresh": 2,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 5,
-        "type": "query"
-      },
-      {
-        "current": {},
-        "datasource": {
-          "type": "prometheus",
-          "uid": "${datasource}"
-        },
-        "definition": "label_values(shinyproxy:proxied_app:annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_user_id=\"$user\", annotation_openanalytics_eu_sp_spec_id=\"$app\", annotation_openanalytics_eu_sp_app_instance=\"$instance\"}, annotation_openanalytics_eu_sp_proxy_id)",
+        "definition": "label_values(shinyproxy:delegate_app:annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_spec_id=\"$app\"}, annotation_openanalytics_eu_sp_proxy_id)",
         "hide": 0,
         "includeAll": false,
         "multi": false,
         "name": "id",
         "options": [],
         "query": {
-          "query": "label_values(shinyproxy:proxied_app:annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_user_id=\"$user\", annotation_openanalytics_eu_sp_spec_id=\"$app\", annotation_openanalytics_eu_sp_app_instance=\"$instance\"}, annotation_openanalytics_eu_sp_proxy_id)",
+          "query": "label_values(shinyproxy:delegate_app:annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_spec_id=\"$app\"}, annotation_openanalytics_eu_sp_proxy_id)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -909,14 +863,14 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values(shinyproxy:proxied_app:annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_user_id=\"$user\", annotation_openanalytics_eu_sp_spec_id=\"$app\", annotation_openanalytics_eu_sp_app_instance=\"$instance\", annotation_openanalytics_eu_sp_proxy_id=\"$id\"}, pod)",
+        "definition": "label_values(shinyproxy:delegate_app:annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_spec_id=\"$app\", annotation_openanalytics_eu_sp_proxy_id=\"$id\"}, pod)",
         "hide": 2,
         "includeAll": false,
         "multi": false,
         "name": "pod",
         "options": [],
         "query": {
-          "query": "label_values(shinyproxy:proxied_app:annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_user_id=\"$user\", annotation_openanalytics_eu_sp_spec_id=\"$app\", annotation_openanalytics_eu_sp_app_instance=\"$instance\", annotation_openanalytics_eu_sp_proxy_id=\"$id\"}, pod)",
+          "query": "label_values(shinyproxy:delegate_app:annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_spec_id=\"$app\", annotation_openanalytics_eu_sp_proxy_id=\"$id\"}, pod)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -947,8 +901,8 @@
     ]
   },
   "timezone": "browser",
-  "title": "ShinyProxy App Resources",
-  "uid": "shinyproxy-app-resources",
-  "version": 1,
+  "title": "ShinyProxy Delegate App Resources",
+  "uid": "shinyproxy-delegate-app-resources",
+  "version": 2,
   "weekStart": ""
 }
