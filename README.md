@@ -41,6 +41,12 @@ The retention of both Loki and Prometheus is set to 90 days.
     - Number of active users
     - Number of auth failures
     - Number of app start failures
+    - Number of app crashes
+
+**Note**: the last three panels of this dashboard can somtimes show a too high
+value, e.g. the app crashes dashboard could list two app crashes while in
+reality only a single app crashed. This is caused by a limitation
+in [Prometheus](https://www.doit.com/making-peace-with-prometheus-rate/).
 
 ### ShinyProxy Aggregated Usage
 
