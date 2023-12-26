@@ -24,8 +24,7 @@
   "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 32,
-  "iteration": 1672920982583,
+  "iteration": 1703581105529,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -711,7 +710,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum by (spec_id) (max by (shinyproxy_instance, spec_id) (absolute_apps_running{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\",spec_id=~\"$spec_id\"}))",
+          "expr": "max by (spec_id) (absolute_apps_running{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\",spec_id=~\"$spec_id\"})",
           "interval": "",
           "legendFormat": "{{spec_id}}",
           "queryType": "randomWalk",
@@ -1260,6 +1259,6 @@
   "timezone": "browser",
   "title": "ShinyProxy Usage",
   "uid": "shinyproxy-usage",
-  "version": 2,
+  "version": 1,
   "weekStart": ""
 }
