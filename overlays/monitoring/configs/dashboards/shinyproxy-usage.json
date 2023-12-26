@@ -24,7 +24,7 @@
   "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "iteration": 1703583744121,
+  "iteration": 1703590461391,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -965,7 +965,7 @@
       "fillGradient": 0,
       "gridPos": {
         "h": 8,
-        "w": 12,
+        "w": 24,
         "x": 0,
         "y": 68
       },
@@ -1052,27 +1052,31 @@
         "type": "prometheus",
         "uid": "${datasource}"
       },
-      "fill": 1,
+      "fill": 6,
       "fillGradient": 0,
       "gridPos": {
         "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 68
+        "w": 24,
+        "x": 0,
+        "y": 76
       },
       "hiddenSeries": false,
-      "id": 7,
+      "id": 30,
       "legend": {
+        "alignAsTable": false,
         "avg": false,
-        "current": false,
+        "current": true,
+        "hideEmpty": true,
+        "hideZero": true,
         "max": false,
         "min": false,
-        "show": false,
+        "rightSide": true,
+        "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
-      "linewidth": 1,
+      "linewidth": 0,
       "nullPointMode": "null as zero",
       "options": {
         "alertThreshold": true
@@ -1084,25 +1088,27 @@
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "stack": true,
+      "steppedLine": true,
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "${datasource}"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(increase(startFailed_total{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\"}[$__rate_interval])) != 0",
+          "expr": "max by (spec_id) (round(increase(startFailed_total{namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",shinyproxy_instance=~\"$instance\"}[$__rate_interval])))",
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "{{spec_id}}",
           "queryType": "randomWalk",
+          "range": true,
           "refId": "A"
         }
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "Start failure rate",
+      "title": "App start failures",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1149,10 +1155,10 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 76
+        "y": 84
       },
       "hiddenSeries": false,
-      "id": 30,
+      "id": 31,
       "legend": {
         "alignAsTable": false,
         "avg": false,
