@@ -8,3 +8,4 @@ configMapGenerator:
     files:
       - configs/dashboards/shinyproxy-delegate-app-logs.json
       - configs/dashboards/shinyproxy-delegate-app-resources.json
+      - configs/dashboards/shinyproxy-seats.json
