@@ -280,8 +280,22 @@ have as password `password`). You can log into grafana
 on <http://grafana.shinyproxy-demo.local>, with the username and password `
 admin`.
 
-## Further work
+## Upgrade to 3.1.0
 
-This project could also provide a set of rules in order to set up alerting.
+This repository uses the same version numbers as ShinyProxy. Always use the same
+version of ShinyProxy and this repository.
 
-**(c) Copyright Open Analytics NV, 2022.**
+In release 3.1.0 of this repository, all components were upgraded. In order to
+maintain your logs and metrics, it's important to take the following steps when
+updating:
+
+- edit line 50
+  of [`overlays/loki/configs/config.yaml`](overlays/loki/configs/config.yaml):
+  change the day to be one day after you upgrade Loki. E.g. if you update this
+  on `2024-03-25` (25 March 2024), change the date to `2024-03-26`. If you do
+  not modify this line, you will no longer be able to access logs from before
+  the upgrade. See
+  the [Loki docs](https://grafana.com/docs/loki/latest/operations/storage/schema/)
+  for more information.
+
+**(c) Copyright Open Analytics NV, 2022-2024.**

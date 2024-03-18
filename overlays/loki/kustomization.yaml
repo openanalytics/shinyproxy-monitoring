@@ -4,15 +4,15 @@ kind: Kustomization
 namespace: loki
 
 resources:
-  - resources/loki.namespace.yaml
-  - ../../bases/loki
+- resources/loki.namespace.yaml
+- ../../bases/loki
 
-patchesStrategicMerge:
-  - patches/loki.statefulset.yaml
+configMapGenerator:
+- behavior: replace
+  files:
+  - config.yaml=configs/config.yaml
+  name: loki
+  namespace: loki
 
-secretGenerator:
-  - name: loki
-    namespace: loki
-    behavior: replace
-    files:
-      - loki.yaml=configs/config.yaml
+patches:
+- path: patches/loki.statefulset.yaml
