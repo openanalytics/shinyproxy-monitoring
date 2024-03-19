@@ -50,3 +50,8 @@ configMapGenerator:
       - configs/dashboards/shinyproxy-usage.json
       - configs/dashboards/shinyproxy-aggregated-usage.json
       - configs/dashboards/shinyproxy-app-resources.json
+
+images:
+  - name: grafana/grafana
+    newName: grafana/grafana
+    newTag: 9.5.17
