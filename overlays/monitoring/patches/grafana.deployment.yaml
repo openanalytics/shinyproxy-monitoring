@@ -8,13 +8,12 @@ spec:
     spec:
       containers:
         - name: grafana
-          image: grafana/grafana:8.5.6
           volumeMounts:
             - mountPath: /grafana-dashboard-definitions/1
               name: grafana-shinyproxy-dashboards
               readOnly: true
-          envFrom:
 # Example OIDC Configuration:
+#          envFrom:
 #            - secretRef:
 #                name: grafana
 #          env:

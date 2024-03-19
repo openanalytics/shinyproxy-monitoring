@@ -1,4 +1,4 @@
-manifest_version=release-0.10
+manifest_version=release-0.13
 
 git_dir=kube-prometheus-repo
 out_dir=../
@@ -8,7 +8,7 @@ all: update
 update:
 	$(info Updating to version $(manifest_version))
 	rm -rf $(git_dir) $(out_dir)/manifests $(out_dir)/kustomization.yaml
-	git clone https://github.com/prometheus-operator/kube-prometheus/ -b release-0.10 --depth 1 $(git_dir)
+	git clone https://github.com/prometheus-operator/kube-prometheus/ -b ${manifest_version} --depth 1 $(git_dir)
 	cp -r $(git_dir)/manifests/ $(out_dir)/manifests
 
 	echo "apiVersion: kustomize.config.k8s.io/v1beta1" > $(out_dir)/kustomization.yaml
