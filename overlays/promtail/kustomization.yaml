@@ -10,3 +10,8 @@ secretGenerator:
     behavior: replace
     files:
       - configs/promtail.yaml
+
+images:
+  - name: docker.io/grafana/promtail:2.9.3
+    newName: docker.io/grafana/promtail
+    newTag: 2.9.5

@@ -1,4 +1,4 @@
-manifest_version=6.0.2
+manifest_version=6.15.5
 component=promtail
 
 outfile=../base.yaml

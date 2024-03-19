@@ -16,3 +16,8 @@ configMapGenerator:
 
 patches:
 - path: patches/loki.statefulset.yaml
+
+images:
+  - name: docker.io/grafana/loki:2.9.4
+    newName: docker.io/grafana/loki
+    newTag: 2.9.5
