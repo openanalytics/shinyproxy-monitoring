@@ -6,7 +6,6 @@ resources:
   - resources/monitoring.ingress.yaml
   - resources/grafana-storage.pvc.yaml
   - resources/shinyproxy.servicemonitor.yaml
-  - resources/shinyproxy.prometheus-rule.yaml
 
 patchesStrategicMerge:
   - patches/grafana.deployment.yaml

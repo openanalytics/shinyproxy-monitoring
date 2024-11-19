@@ -25,8 +25,7 @@
   "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 32,
-  "iteration": 1702304513303,
+  "iteration": 1732020827811,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -88,7 +87,7 @@
             "type": "loki",
             "uid": "${datasource}"
           },
-          "expr": "{sp_realm_id=~\".+\", namespace=\"$namespace\", sp_realm_id=\"$realm\", sp_user_id=\"$user\", sp_spec_id=\"$app\", sp_proxy_instance=\"$instance\", sp_proxy_id=\"$id\"} ",
+          "expr": "{sp_realm_id=~\".+\", namespace=~\"$namespace\", sp_realm_id=~\"$realm\", sp_user_id=~\"$user\", sp_spec_id=~\"$app\", sp_proxy_instance=~\"$instance\", sp_proxy_id=\"$id\"} ",
           "maxLines": 1,
           "refId": "A"
         }
@@ -136,7 +135,7 @@
             "type": "loki",
             "uid": "${datasource}"
           },
-          "expr": "{sp_realm_id=~\".+\", namespace=\"$namespace\", sp_realm_id=\"$realm\", sp_spec_id=\"$app\", sp_proxy_id=\"$id\", sp_proxy_id!=\"\"} | line_format `[App]: {{ __line__ }}` ",
+          "expr": "{sp_realm_id=~\".+\", namespace=~\"$namespace\", sp_realm_id=~\"$realm\", sp_spec_id=~\"$app\", sp_proxy_id=\"$id\", sp_proxy_id!=\"\"} | line_format `[App]: {{ __line__ }}` ",
           "legendFormat": "",
           "refId": "A"
         },
@@ -145,7 +144,7 @@
             "type": "loki",
             "uid": "${datasource}"
           },
-          "expr": "{app=\"shinyproxy\", namespace=\"$namespace\", sp_realm_id=\"$realm\"} | json | delegateProxyId=\"$id\" | line_format `[ShinyProxy] {{.level}}: {{.message}} {{.stack_trace}}`",
+          "expr": "{app=\"shinyproxy\", namespace=~\"$namespace\", sp_realm_id=~\"$realm\"} | json | delegateProxyId=\"$id\" | line_format `[ShinyProxy] {{.level}}: {{.message}} {{.stack_trace}}`",
           "hide": false,
           "legendFormat": "",
           "refId": "B"
@@ -167,14 +166,14 @@
           "type": "prometheus",
           "uid": "${prometheus}"
         },
-        "definition": "label_values(shinyproxy:delegate_app:annotations{annotation_openanalytics_eu_sp_realm_id=~\".+\"}, namespace)",
+        "definition": "label_values(delegate_app_info, proxy_namespace)",
         "hide": 0,
         "includeAll": false,
         "multi": false,
         "name": "namespace",
         "options": [],
         "query": {
-          "query": "label_values(shinyproxy:delegate_app:annotations{annotation_openanalytics_eu_sp_realm_id=~\".+\"}, namespace)",
+          "query": "label_values(delegate_app_info, proxy_namespace)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -189,14 +188,14 @@
           "type": "prometheus",
           "uid": "${prometheus}"
         },
-        "definition": "label_values(shinyproxy:delegate_app:annotations{job=~\".+\",namespace=~\"$namespace\"}, annotation_openanalytics_eu_sp_realm_id)",
+        "definition": "label_values(delegate_app_info{job=~\".+\",proxy_namespace=~\"$namespace\"}, shinyproxy_realm)",
         "hide": 0,
         "includeAll": false,
         "multi": false,
         "name": "realm",
         "options": [],
         "query": {
-          "query": "label_values(shinyproxy:delegate_app:annotations{job=~\".+\",namespace=~\"$namespace\"}, annotation_openanalytics_eu_sp_realm_id)",
+          "query": "label_values(delegate_app_info{job=~\".+\",proxy_namespace=~\"$namespace\"}, shinyproxy_realm)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -214,14 +213,14 @@
           "type": "prometheus",
           "uid": "${prometheus}"
         },
-        "definition": "label_values(shinyproxy:delegate_app:annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\"}, annotation_openanalytics_eu_sp_spec_id)",
+        "definition": "label_values(delegate_app_info{job=~\".+\",proxy_namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\"}, spec_id)",
         "hide": 0,
         "includeAll": false,
         "multi": false,
         "name": "app",
         "options": [],
         "query": {
-          "query": "label_values(shinyproxy:delegate_app:annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\"}, annotation_openanalytics_eu_sp_spec_id)",
+          "query": "label_values(delegate_app_info{job=~\".+\",proxy_namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\"}, spec_id)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -239,14 +238,14 @@
           "type": "prometheus",
           "uid": "${prometheus}"
         },
-        "definition": "label_values(shinyproxy:delegate_app:annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\",annotation_openanalytics_eu_sp_spec_id=\"$app\"}, annotation_openanalytics_eu_sp_proxy_id)",
+        "definition": "label_values(delegate_app_info{job=~\".+\",proxy_namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",spec_id=~\"$app\"}, proxy_id)",
         "hide": 0,
         "includeAll": false,
         "multi": false,
         "name": "id",
         "options": [],
         "query": {
-          "query": "label_values(shinyproxy:delegate_app:annotations{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\",annotation_openanalytics_eu_sp_spec_id=\"$app\"}, annotation_openanalytics_eu_sp_proxy_id)",
+          "query": "label_values(delegate_app_info{job=~\".+\",proxy_namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",spec_id=~\"$app\"}, proxy_id)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
