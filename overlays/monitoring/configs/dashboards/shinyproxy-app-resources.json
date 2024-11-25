@@ -25,7 +25,6 @@
   "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
   "iteration": 1732020295231,
   "links": [],
   "liveNow": false,
@@ -67,15 +66,15 @@
       },
       "id": 4,
       "options": {
-        "colorMode": "value",
+        "colorMode": "none",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "last"
+            "lastNotNull"
           ],
-          "fields": "/^value$/",
+          "fields": "/^proxy_created_timestamp$/",
           "values": false
         },
         "text": {},
@@ -88,21 +87,26 @@
             "type": "prometheus",
             "uid": "${prometheus}"
           },
-          "expr": "{job=~\".+\",namespace=~\"$namespace\", annotation_openanalytics_eu_sp_realm_id=\"$realm\", annotation_openanalytics_eu_sp_user_id=\"$user\", annotation_openanalytics_eu_sp_spec_id=\"$app\", annotation_openanalytics_eu_sp_app_instance=\"$instance\", annotation_openanalytics_eu_sp_proxy_id=\"$id\"}",
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "max(appInfo{job=~\".+\",proxy_namespace=~\"$namespace\", shinyproxy_realm=~\"$realm\", user_id=~\"$user\", spec_id=~\"$app\", proxy_instance=~\"$instance\", proxy_id=\"$id\"}) by (proxy_created_timestamp)",
+          "format": "table",
+          "instant": false,
+          "range": true,
           "refId": "A"
         }
       ],
       "title": "App creation time",
       "transformations": [
         {
-          "id": "labelsToFields",
+          "id": "organize",
           "options": {
-            "keepLabels": [
-              "sp_proxy_created_timestamp",
-              "annotation_openanalytics_eu_sp_proxy_created_timestamp"
-            ],
-            "mode": "rows",
-            "valueLabel": "sp_proxy_created_timestamp"
+            "excludeByName": {
+              "Time": true,
+              "Value": true
+            },
+            "indexByName": {},
+            "renameByName": {}
           }
         }
       ],
@@ -257,7 +261,7 @@
             "uid": "${prometheus}"
           },
           "editorMode": "code",
-          "expr": "sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate{namespace=\"$namespace\", pod=\"$pod\", container!=\"POD\"})",
+          "expr": "sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate{namespace=~\"$namespace\", pod=\"$pod\", container!=\"POD\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "CPU Usage",
@@ -755,8 +759,8 @@
         },
         "definition": "label_values(appInfo, proxy_namespace)",
         "hide": 0,
-        "includeAll": false,
-        "multi": false,
+        "includeAll": true,
+        "multi": true,
         "name": "namespace",
         "options": [],
         "query": {
@@ -777,8 +781,8 @@
         },
         "definition": "label_values(appInfo{job=~\".+\",proxy_namespace=~\"$namespace\"}, shinyproxy_realm)",
         "hide": 0,
-        "includeAll": false,
-        "multi": false,
+        "includeAll": true,
+        "multi": true,
         "name": "realm",
         "options": [],
         "query": {
@@ -802,8 +806,8 @@
         },
         "definition": "label_values(appInfo{job=~\".+\",proxy_namespace=~\"$namespace\", shinyproxy_realm=~\"$realm\"}, user_id)",
         "hide": 0,
-        "includeAll": false,
-        "multi": false,
+        "includeAll": true,
+        "multi": true,
         "name": "user",
         "options": [],
         "query": {
@@ -827,8 +831,8 @@
         },
         "definition": "label_values(appInfo{job=~\".+\",proxy_namespace=~\"$namespace\", shinyproxy_realm=~\"$realm\", user_id=~\"$user\"}, spec_id)",
         "hide": 0,
-        "includeAll": false,
-        "multi": false,
+        "includeAll": true,
+        "multi": true,
         "name": "app",
         "options": [],
         "query": {
@@ -852,8 +856,8 @@
         },
         "definition": "label_values(appInfo{job=~\".+\", proxy_namespace=~\"$namespace\", shinyproxy_realm=~\"$realm\", user_id=~\"$user\", spec_id=~\"$app\"}, proxy_instance)",
         "hide": 0,
-        "includeAll": false,
-        "multi": false,
+        "includeAll": true,
+        "multi": true,
         "name": "instance",
         "options": [],
         "query": {
@@ -896,7 +900,7 @@
         "hide": 2,
         "includeAll": false,
         "multi": false,
-        "name": "datasource",
+        "name": "prometheus",
         "options": [],
         "query": "prometheus",
         "refresh": 1,
