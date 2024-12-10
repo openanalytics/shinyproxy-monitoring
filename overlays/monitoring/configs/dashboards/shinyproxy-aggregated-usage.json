@@ -24,9 +24,7 @@
   "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "iteration": 1659369601329,
   "links": [],
-  "liveNow": false,
   "panels": [
     {
       "datasource": {
@@ -407,7 +405,8 @@
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
-        "type": "datasource"
+        "type": "datasource",
+        "allowCustomValue": false
       },
       {
         "allValue": ".+",
@@ -430,7 +429,8 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 5,
-        "type": "query"
+        "type": "query",
+        "allowCustomValue": false
       },
       {
         "allValue": ".+",
@@ -453,7 +453,8 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 5,
-        "type": "query"
+        "type": "query",
+        "allowCustomValue": false
       },
       {
         "allValue": ".*",
@@ -476,7 +477,8 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 5,
-        "type": "query"
+        "type": "query",
+        "allowCustomValue": false
       },
       {
         "allValue": ".*",
@@ -500,7 +502,8 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 5,
-        "type": "query"
+        "type": "query",
+        "allowCustomValue": false
       }
     ]
   },

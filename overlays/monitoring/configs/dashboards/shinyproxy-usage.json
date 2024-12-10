@@ -25,7 +25,6 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "links": [],
-  "liveNow": false,
   "panels": [
     {
       "collapsed": false,
@@ -124,7 +123,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "8.5.6",
       "targets": [
         {
           "datasource": {
@@ -243,7 +242,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "8.5.6",
       "targets": [
         {
           "datasource": {
@@ -349,7 +348,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "8.5.6",
       "targets": [
         {
           "datasource": {
@@ -455,7 +454,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "8.5.6",
       "targets": [
         {
           "datasource": {
@@ -561,7 +560,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "8.5.6",
       "targets": [
         {
           "datasource": {
@@ -680,7 +679,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "8.5.6",
       "targets": [
         {
           "datasource": {
@@ -783,7 +782,7 @@
           "sort": "asc"
         }
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "8.5.6",
       "targets": [
         {
           "datasource": {
@@ -887,7 +886,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "8.5.6",
       "targets": [
         {
           "datasource": {
@@ -988,7 +987,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "8.5.6",
       "targets": [
         {
           "datasource": {
@@ -1099,7 +1098,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "8.5.6",
       "targets": [
         {
           "datasource": {
@@ -1200,7 +1199,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "8.5.6",
       "targets": [
         {
           "datasource": {
@@ -1301,7 +1300,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "8.5.6",
       "targets": [
         {
           "datasource": {
@@ -1339,7 +1338,8 @@
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
-        "type": "datasource"
+        "type": "datasource",
+        "allowCustomValue": false
       },
       {
         "allValue": ".+",
@@ -1362,7 +1362,8 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 5,
-        "type": "query"
+        "type": "query",
+        "allowCustomValue": false
       },
       {
         "allValue": ".*",
@@ -1386,7 +1387,8 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 5,
-        "type": "query"
+        "type": "query",
+        "allowCustomValue": false
       },
       {
         "allValue": ".*",
@@ -1409,7 +1411,8 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 5,
-        "type": "query"
+        "type": "query",
+        "allowCustomValue": false
       },
       {
         "allValue": ".+",
@@ -1433,7 +1436,8 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 5,
-        "type": "query"
+        "type": "query",
+        "allowCustomValue": false
       }
     ]
   },

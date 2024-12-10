@@ -24,9 +24,7 @@
   "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "iteration": 1672409007157,
   "links": [],
-  "liveNow": false,
   "panels": [
     {
       "datasource": {
@@ -180,7 +178,7 @@
             "type": "loki",
             "uid": "${datasource}"
           },
-          "expr": "{app=\"shinyproxy\", namespace=\"$namespace\", sp_realm_id=\"$realm\", sp_instance=~\"$instance\"} | json | line_format `{{.level}} [{{ printf \"%15.15s\" .thread_name}}] {{ printf \"%-40.40s\" .logger_name}}: {{.message}} {{.stack_trace}}`",
+          "expr": "{app=\"shinyproxy\", namespace=\"$namespace\", sp_realm_id=\"$realm\", sp_instance=~\"$instance\"} | json | level=~\"$level\" | line_format `{{.level}} [{{ printf \"%15.15s\" .thread_name}}] {{ printf \"%-40.40s\" .logger_name}}: {{.message}} {{.stack_trace}}`",
           "refId": "A"
         }
       ],
@@ -205,7 +203,8 @@
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
-        "type": "datasource"
+        "type": "datasource",
+        "allowCustomValue": false
       },
       {
         "current": {},
@@ -227,7 +226,8 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 5,
-        "type": "query"
+        "type": "query",
+        "allowCustomValue": false
       },
       {
         "current": {},
@@ -249,7 +249,8 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 5,
-        "type": "query"
+        "type": "query",
+        "allowCustomValue": false
       },
       {
         "allValue": ".*",
@@ -272,7 +273,8 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 5,
-        "type": "query"
+        "type": "query",
+        "allowCustomValue": false
       },
       {
         "allValue": ".*",
@@ -320,7 +322,8 @@
         "query": "DEBUG,INFO,WARN,ERROR",
         "queryValue": "",
         "skipUrlSync": false,
-        "type": "custom"
+        "type": "custom",
+        "allowCustomValue": false
       },
       {
         "current": {},
@@ -335,7 +338,8 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 5,
-        "type": "datasource"
+        "type": "datasource",
+        "allowCustomValue": false
       }
     ]
   },

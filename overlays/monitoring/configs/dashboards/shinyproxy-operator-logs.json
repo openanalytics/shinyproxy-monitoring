@@ -24,9 +24,7 @@
   "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "iteration": 1661150802605,
   "links": [],
-  "liveNow": false,
   "panels": [
     {
       "datasource": {
@@ -66,6 +64,7 @@
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "sum"
@@ -73,7 +72,9 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
       "pluginVersion": "8.5.6",
       "targets": [
@@ -128,6 +129,7 @@
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "sum"
@@ -135,7 +137,9 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
       "pluginVersion": "8.5.6",
       "targets": [
@@ -157,6 +161,10 @@
         "type": "loki",
         "uid": "${datasource}"
       },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
       "gridPos": {
         "h": 22,
         "w": 24,
@@ -166,6 +174,7 @@
       "id": 2,
       "options": {
         "dedupStrategy": "none",
+        "enableInfiniteScrolling": false,
         "enableLogDetails": true,
         "prettifyLogMessage": false,
         "showCommonLabels": false,
@@ -174,6 +183,7 @@
         "sortOrder": "Ascending",
         "wrapLogMessage": true
       },
+      "pluginVersion": "8.5.6",
       "targets": [
         {
           "datasource": {
@@ -188,9 +198,9 @@
       "type": "logs"
     }
   ],
+  "preload": false,
   "refresh": "10s",
-  "schemaVersion": 36,
-  "style": "dark",
+  "schemaVersion": 40,
   "tags": [],
   "templating": {
     "list": [
@@ -198,14 +208,13 @@
         "current": {},
         "hide": 2,
         "includeAll": false,
-        "multi": false,
         "name": "datasource",
         "options": [],
         "query": "loki",
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
-        "type": "datasource"
+        "type": "datasource",
+        "allowCustomValue": false
       },
       {
         "current": {},
@@ -227,7 +236,8 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 5,
-        "type": "query"
+        "type": "query",
+        "allowCustomValue": false
       },
       {
         "allValue": ".*",
@@ -240,7 +250,6 @@
             "$__all"
           ]
         },
-        "hide": 0,
         "includeAll": true,
         "label": "Log level",
         "multi": true,
@@ -273,23 +282,21 @@
           }
         ],
         "query": "DEBUG,INFO,WARN,ERROR",
-        "queryValue": "",
-        "skipUrlSync": false,
-        "type": "custom"
+        "type": "custom",
+        "allowCustomValue": false
       },
       {
         "current": {},
         "hide": 2,
         "includeAll": false,
-        "multi": false,
         "name": "prometheus",
         "options": [],
         "query": "prometheus",
         "refresh": 2,
         "regex": "",
-        "skipUrlSync": false,
         "type": "datasource",
-        "sort": 5
+        "sort": 5,
+        "allowCustomValue": false
       }
     ]
   },
