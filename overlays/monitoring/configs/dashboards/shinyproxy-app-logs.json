@@ -112,6 +112,107 @@
     },
     {
       "datasource": {
+        "type": "prometheus",
+        "uid": "${prometheus}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed"
+          },
+          "mappings": [
+            {
+              "options": {
+                "1": {
+                  "index": 0,
+                  "text": "New"
+                },
+                "10": {
+                  "index": 1,
+                  "text": "Up"
+                },
+                "20": {
+                  "index": 2,
+                  "text": "Paused"
+                },
+                "30": {
+                  "index": 3,
+                  "text": "Resuming"
+                },
+                "40": {
+                  "index": 4,
+                  "text": "Stopped"
+                },
+                "50": {
+                  "index": 5,
+                  "text": "Crashed"
+                },
+                "100": {
+                  "index": 6,
+                  "text": "Failed to start"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 4,
+        "x": 4,
+        "y": 0
+      },
+      "id": 5,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^Value$/",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.5.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${prometheus}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "appInfo{job=~\".+\",proxy_namespace=~\"$namespace\", shinyproxy_realm=~\"$realm\", user_id=~\"$user\", spec_id=~\"$app\", proxy_instance=~\"$instance\", proxy_id=\"$id\"}",
+          "format": "table",
+          "instant": false,
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "App status",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "datasource": {
         "type": "loki",
         "uid": "${datasource}"
       },
@@ -366,6 +467,6 @@
   "timezone": "browser",
   "title": "ShinyProxy App Logs",
   "uid": "shinyproxy-app-logs",
-  "version": 3,
+  "version": 1,
   "weekStart": ""
 }
