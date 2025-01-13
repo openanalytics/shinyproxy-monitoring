@@ -801,6 +801,7 @@
         "type": "query"
       },
       {
+        "allValue": ".+",
         "current": {},
         "datasource": {
           "type": "prometheus",
@@ -822,6 +823,7 @@
         "allowCustomValue": false
       },
       {
+        "allValue": ".+",
         "current": {},
         "datasource": {
           "type": "prometheus",
@@ -843,6 +845,7 @@
         "allowCustomValue": false
       },
       {
+        "allValue": ".+",
         "current": {},
         "datasource": {
           "type": "prometheus",
@@ -864,6 +867,7 @@
         "allowCustomValue": false
       },
       {
+        "allValue": ".+",
         "current": {},
         "datasource": {
           "type": "prometheus",
@@ -930,7 +934,7 @@
         "name": "pod",
         "options": [],
         "query": {
-          "query": "label_values(appInfo{job=~\".+\",proxy_namespace=~\"$namespace\", shinyproxy_realm=~\"$realm\", user_id=~\"$user\", spec_id=~\"$app\", proxy_instance=\"$instance\",proxy_id=\"$id\"}, resource_id)",
+          "query": "label_values(appInfo{job=~\".+\",proxy_namespace=~\"$namespace\", shinyproxy_realm=~\"$realm\", user_id=~\"$user\", spec_id=~\"$app\", proxy_instance=~\"$instance\",proxy_id=\"$id\"}, resource_id)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,

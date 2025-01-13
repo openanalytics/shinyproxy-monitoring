@@ -240,7 +240,7 @@
         "allowCustomValue": false
       },
       {
-        "allValue": ".*",
+        "allValue": ".+",
         "current": {
           "selected": true,
           "text": [

@@ -253,7 +253,7 @@
         "allowCustomValue": false
       },
       {
-        "allValue": ".*",
+        "allValue": ".+",
         "current": {},
         "datasource": {
           "type": "prometheus",
@@ -277,7 +277,7 @@
         "allowCustomValue": false
       },
       {
-        "allValue": ".*",
+        "allValue": ".+",
         "current": {
           "selected": true,
           "text": [

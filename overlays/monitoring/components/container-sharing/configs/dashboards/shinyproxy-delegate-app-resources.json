@@ -771,7 +771,6 @@
       "type": "timeseries"
     }
   ],
-
   "refresh": "10s",
   "schemaVersion": 36,
   "style": "dark",
@@ -801,6 +800,7 @@
         "allowCustomValue": false
       },
       {
+        "allValue": ".+",
         "current": {},
         "datasource": {
           "type": "prometheus",
@@ -822,6 +822,7 @@
         "allowCustomValue": false
       },
       {
+        "allValue": ".+",
         "current": {},
         "datasource": {
           "type": "prometheus",

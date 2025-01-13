@@ -265,6 +265,7 @@
   "templating": {
     "list": [
       {
+        "allValue": ".+",
         "current": {},
         "datasource": {
           "type": "prometheus",
@@ -288,6 +289,7 @@
         "allowCustomValue": false
       },
       {
+        "allValue": ".+",
         "current": {},
         "datasource": {
           "type": "prometheus",
@@ -314,6 +316,7 @@
         "allowCustomValue": false
       },
       {
+        "allValue": ".+",
         "current": {},
         "datasource": {
           "type": "prometheus",
@@ -340,6 +343,7 @@
         "allowCustomValue": false
       },
       {
+        "allValue": ".+",
         "current": {},
         "datasource": {
           "type": "prometheus",
@@ -366,6 +370,7 @@
         "allowCustomValue": false
       },
       {
+        "allValue": ".+",
         "current": {},
         "datasource": {
           "type": "prometheus",
