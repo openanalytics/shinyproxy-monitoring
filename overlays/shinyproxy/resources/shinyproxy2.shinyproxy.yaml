@@ -4,9 +4,9 @@ metadata:
   name: shinyproxy2
 spec:
   management:
-    metrics:
-      export:
-        prometheus:
+    prometheus:
+      metrics:
+        export:
           enabled: true
   server:
     forward-headers-strategy: native
@@ -15,18 +15,20 @@ spec:
   spring:
     session:
       store-type: redis
-    redis:
-      password: ${REDIS_PASSWORD}
-      sentinel:
-        master: shinyproxy
+    data:
+      redis:
         password: ${REDIS_PASSWORD}
-        nodes: redis-node-0.redis-headless:26379, redis-node-1.redis-headless:26379, redis-node-2.redis-headless:26379
+        sentinel:
+          master: shinyproxy
+          password: ${REDIS_PASSWORD}
+          nodes: redis-node-0.redis-headless:26379, redis-node-1.redis-headless:26379, redis-node-2.redis-headless:26379
   proxy:
     usage-stats-url: micrometer
     store-mode: Redis
     defaultMaxInstances: -1
     title: Open Analytics Shiny Proxy 2
     logo-url: https://www.openanalytics.eu/shinyproxy/logo.png
+    log-as-json: true
     landingPage: /
     containerBackend: kubernetes
     kubernetes:
@@ -59,6 +61,7 @@ spec:
           - op: replace
             path: /metadata/namespace
             value: shinyproxy1-app
+        target-path: "#{proxy.getRuntimeValue('SHINYPROXY_PUBLIC_PATH')}"
       - id: 01_hello
         display-name: Hello Application
         description: Application which demonstrates the basics of a Shiny app

@@ -4,9 +4,9 @@ metadata:
   name: shinyproxy1
 spec:
   management:
-    metrics:
-      export:
-        prometheus:
+    prometheus:
+      metrics:
+        export:
           enabled: true
   server:
     forward-headers-strategy: native
@@ -15,12 +15,13 @@ spec:
   spring:
     session:
       store-type: redis
-    redis:
-      password: ${REDIS_PASSWORD}
-      sentinel:
-        master: shinyproxy
+    data:
+      redis:
         password: ${REDIS_PASSWORD}
-        nodes: redis-node-0.redis-headless:26379, redis-node-1.redis-headless:26379, redis-node-2.redis-headless:26379
+        sentinel:
+          master: shinyproxy
+          password: ${REDIS_PASSWORD}
+          nodes: redis-node-0.redis-headless:26379, redis-node-1.redis-headless:26379, redis-node-2.redis-headless:26379
   proxy:
     usage-stats-url: micrometer
     store-mode: Redis
