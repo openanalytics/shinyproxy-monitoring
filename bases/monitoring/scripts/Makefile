@@ -1,4 +1,4 @@
-manifest_version=release-0.13
+manifest_version=release-0.14
 
 git_dir=kube-prometheus-repo
 out_dir=../
