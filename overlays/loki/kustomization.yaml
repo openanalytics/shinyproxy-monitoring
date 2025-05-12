@@ -18,6 +18,6 @@ patches:
 - path: patches/loki.statefulset.yaml
 
 images:
-  - name: docker.io/grafana/loki:2.9.4
+  - name: docker.io/grafana/loki
     newName: docker.io/grafana/loki
-    newTag: 2.9.5
+    newTag: 3.4.3
