@@ -442,10 +442,10 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate{namespace=~\"$namespace\", pod=\"$pod\", container!=\"POD\"})",
+          "expr": "sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate{namespace=~\"$namespace\", pod=~\"$pod\", container!=\"POD\"}) by (pod)",
           "format": "time_series",
           "intervalFactor": 2,
-          "legendFormat": "CPU Usage",
+          "legendFormat": "CPU Usage {{pod}}",
           "range": true,
           "refId": "A",
           "step": 10
@@ -455,7 +455,7 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "expr": "sum(\n    kube_pod_container_resource_requests{job=\"kube-state-metrics\", namespace=~\"$namespace\", pod=\"$pod\", resource=\"cpu\"}\n)\n",
+          "expr": "sum(\n    kube_pod_container_resource_requests{job=\"kube-state-metrics\", namespace=~\"$namespace\", pod=~\"$pod\", resource=\"cpu\"}\n)\n",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "requests",
@@ -467,7 +467,7 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "expr": "sum(\n    kube_pod_container_resource_limits{job=\"kube-state-metrics\", namespace=~\"$namespace\", pod=\"$pod\", resource=\"cpu\"}\n)\n",
+          "expr": "sum(\n    kube_pod_container_resource_limits{job=\"kube-state-metrics\", namespace=~\"$namespace\", pod=~\"$pod\", resource=\"cpu\"}\n)\n",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "limits",
@@ -573,10 +573,10 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(increase(container_cpu_cfs_throttled_periods_total{job=\"kubelet\", metrics_path=\"/metrics/cadvisor\", namespace=~\"$namespace\", pod=\"$pod\", container!=\"\"}[$__rate_interval])) /sum(increase(container_cpu_cfs_periods_total{job=\"kubelet\", metrics_path=\"/metrics/cadvisor\", namespace=~\"$namespace\", pod=\"$pod\", container!=\"\"}[$__rate_interval]))",
+          "expr": "sum(increase(container_cpu_cfs_throttled_periods_total{job=\"kubelet\", metrics_path=\"/metrics/cadvisor\", namespace=~\"$namespace\", pod=~\"$pod\", container!=\"\"}[$__rate_interval])) by (pod) /sum(increase(container_cpu_cfs_periods_total{job=\"kubelet\", metrics_path=\"/metrics/cadvisor\", namespace=~\"$namespace\", pod=~\"$pod\", container!=\"\"}[$__rate_interval])) by (pod)",
           "format": "time_series",
           "intervalFactor": 2,
-          "legendFormat": "CPU Throttling",
+          "legendFormat": "CPU Throttling {{pod}}",
           "range": true,
           "refId": "A",
           "step": 10
@@ -759,10 +759,10 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(container_memory_working_set_bytes{job=\"kubelet\", metrics_path=\"/metrics/cadvisor\", namespace=~\"$namespace\", pod=\"$pod\", container!=\"POD\", image!=\"\"}) by (container)",
+          "expr": "sum(container_memory_working_set_bytes{job=\"kubelet\", metrics_path=\"/metrics/cadvisor\", namespace=~\"$namespace\", pod=~\"$pod\", container!=\"POD\", container!=\"\", image!=\"\"}) by (pod)",
           "format": "time_series",
           "intervalFactor": 2,
-          "legendFormat": "Memory Usage",
+          "legendFormat": "Memory Usage {{pod}}",
           "range": true,
           "refId": "A",
           "step": 10
@@ -774,7 +774,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(\n    kube_pod_container_resource_requests{job=\"kube-state-metrics\", namespace=~\"$namespace\", pod=\"$pod\", resource=\"memory\"}\n)\n",
+          "expr": "sum(\n    kube_pod_container_resource_requests{job=\"kube-state-metrics\", namespace=~\"$namespace\", pod=~\"$pod\", resource=\"memory\"}\n)\n",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -788,7 +788,7 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "expr": "sum(\n    kube_pod_container_resource_limits{job=\"kube-state-metrics\", namespace=~\"$namespace\", pod=\"$pod\", resource=\"memory\"}\n)\n",
+          "expr": "sum(\n    kube_pod_container_resource_limits{job=\"kube-state-metrics\", namespace=~\"$namespace\", pod=~\"$pod\", resource=\"memory\"}\n)\n",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "limits",
@@ -922,8 +922,8 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "container_network_receive_bytes_total{pod=\"$pod\", pod!=\"\"}",
-          "legendFormat": "Receive",
+          "expr": "sum(container_network_receive_bytes_total{pod=~\"$pod\", pod!=\"\"}) by (pod)",
+          "legendFormat": "Receive {{pod}}",
           "range": true,
           "refId": "A"
         },
@@ -934,10 +934,10 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "container_network_transmit_bytes_total{pod=\"$pod\", pod!=\"\"}",
+          "expr": "sum(container_network_transmit_bytes_total{pod=~\"$pod\", pod!=\"\"}) by (pod)",
           "hide": false,
           "interval": "",
-          "legendFormat": "Transmit",
+          "legendFormat": "Transmit {{pod}}",
           "range": true,
           "refId": "B"
         }
@@ -1019,13 +1019,15 @@
         "allowCustomValue": false
       },
       {
+        "allValue": ".+",
         "current": {},
         "datasource": {
           "type": "prometheus",
           "uid": "${datasource}"
         },
         "definition": "label_values(delegate_app_info{job=~\".+\",proxy_namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",spec_id=~\"$app\"}, proxy_id)",
-        "includeAll": false,
+        "includeAll": true,
+        "multi": true,
         "name": "id",
         "options": [],
         "query": {
@@ -1056,13 +1058,14 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values(delegate_app_info{job=~\".+\",proxy_namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",spec_id=~\"$app\",proxy_id=\"$id\"}, resource_id)\n\n\n",
+        "definition": "label_values(delegate_app_info{job=~\".+\",proxy_namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",spec_id=~\"$app\",proxy_id=~\"$id\"}, resource_id)\n\n\n",
         "hide": 2,
-        "includeAll": false,
+        "includeAll": true,
+        "multi": true,
         "name": "pod",
         "options": [],
         "query": {
-          "query": "label_values(delegate_app_info{job=~\".+\",proxy_namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",spec_id=~\"$app\",proxy_id=\"$id\"}, resource_id)\n\n\n",
+          "query": "label_values(delegate_app_info{job=~\".+\",proxy_namespace=~\"$namespace\",shinyproxy_realm=~\"$realm\",spec_id=~\"$app\",proxy_id=~\"$id\"}, resource_id)\n\n\n",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
