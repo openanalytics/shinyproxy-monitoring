@@ -5,6 +5,7 @@ metadata:
   namespace: monitoring
 spec:
   retention: 90d
+  scrapeInterval: 30s
   storage:
     volumeClaimTemplate:
       metadata:
