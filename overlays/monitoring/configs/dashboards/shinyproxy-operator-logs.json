@@ -270,22 +270,21 @@
       {
         "current": {},
         "datasource": {
-          "type": "prometheus",
-          "uid": "${prometheus}"
+          "type": "loki",
+          "uid": "${datasource}"
         },
-        "definition": "label_values(kube_pod_labels{label_app=\"shinyproxy-operator\"}, namespace)",
-        "hide": 0,
+        "definition": "",
         "includeAll": false,
-        "multi": false,
         "name": "namespace",
         "options": [],
         "query": {
-          "query": "label_values(kube_pod_labels{label_app=\"shinyproxy-operator\"}, namespace)",
-          "refId": "StandardVariableQuery"
+          "label": "namespace",
+          "refId": "LokiVariableQueryEditor-VariableQuery",
+          "stream": "{app=\"shinyproxy-operator\"}",
+          "type": 1
         },
         "refresh": 2,
         "regex": "",
-        "skipUrlSync": false,
         "sort": 5,
         "type": "query",
         "allowCustomValue": false
@@ -334,19 +333,6 @@
         ],
         "query": "DEBUG,INFO,WARN,ERROR",
         "type": "custom",
-        "allowCustomValue": false
-      },
-      {
-        "current": {},
-        "hide": 2,
-        "includeAll": false,
-        "name": "prometheus",
-        "options": [],
-        "query": "prometheus",
-        "refresh": 2,
-        "regex": "",
-        "type": "datasource",
-        "sort": 5,
         "allowCustomValue": false
       },
       {
