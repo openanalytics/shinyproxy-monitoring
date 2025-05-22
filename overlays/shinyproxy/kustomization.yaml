@@ -9,5 +9,5 @@ resources:
   - resources/shinyproxy1.shinyproxy.yaml
   - resources/shinyproxy2.shinyproxy.yaml
 
-patchesStrategicMerge:
-  - patches/shinyproxy-operator-role.role.yaml
+patches:
+  - path: patches/shinyproxy-operator-role.role.yaml

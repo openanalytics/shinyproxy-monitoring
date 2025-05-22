@@ -7,26 +7,25 @@ resources:
   - resources/grafana-storage.pvc.yaml
   - resources/shinyproxy.servicemonitor.yaml
 
-patchesStrategicMerge:
-  - patches/grafana.deployment.yaml
-  - patches/prometheus.prometheus.yaml
-  - patches/alertmanager.alertmanager.yaml
 
 components:
   - components/container-sharing
 
 patches:
-  - target:
+  - path: patches/prometheus-k8s.clusterrole.yaml
+    target:
       kind: ClusterRole
       name: prometheus-k8s
-    path: patches/prometheus-k8s.clusterrole.yaml
+  - path: patches/grafana.deployment.yaml
+  - path: patches/prometheus.prometheus.yaml
+  - path: patches/alertmanager.alertmanager.yaml
 
 secretGenerator:
-  - name: grafana-datasources
-    namespace: monitoring
-    behavior: replace
+  - behavior: replace
     files:
       - datasources.yaml=configs/datasources.yaml
+    name: grafana-datasources
+    namespace: monitoring
 #  Example OIDC Configuration:
 #  - envs:
 #      - secrets/grafana.env
@@ -34,20 +33,20 @@ secretGenerator:
 #    namespace: monitoring
 
 configMapGenerator:
-  - name: grafana-dashboards
-    namespace: monitoring
-    behavior: replace
+  - behavior: replace
     files:
       - dashboards.yaml=configs/grafana-dashboardSources.json
-  - name: grafana-shinyproxy-dashboards
+    name: grafana-dashboards
     namespace: monitoring
-    files:
+  - files:
       - configs/dashboards/shinyproxy-app-logs.json
       - configs/dashboards/shinyproxy-operator-logs.json
       - configs/dashboards/shinyproxy-logs.json
       - configs/dashboards/shinyproxy-usage.json
       - configs/dashboards/shinyproxy-aggregated-usage.json
       - configs/dashboards/shinyproxy-app-resources.json
+    name: grafana-shinyproxy-dashboards
+    namespace: monitoring
 
 images:
   - name: grafana/grafana
