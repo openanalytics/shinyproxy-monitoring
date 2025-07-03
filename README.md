@@ -302,4 +302,4 @@ The resources in this repository can only be used on Kubernetes. However, a very
 similar stack can be deployed on pure docker hosts by using
 the [ShinyProxy Operator](https://shinyproxy.io/3.2.0-preview/documentation/shinyproxy-operator/docker/#enabling-monitoring).
 
-**(c) Copyright Open Analytics NV, 2022-2024.**
+**(c) Copyright Open Analytics NV, 2022-2025.**
