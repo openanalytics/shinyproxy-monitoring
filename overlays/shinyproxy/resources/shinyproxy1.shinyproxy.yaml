@@ -69,8 +69,11 @@ spec:
         container-image: openanalytics/shinyproxy-demo
         access-groups: [scientists, mathematicians]
         minimumSeatsAvailable: 2
+        container-memory-request: 125Mi
+        container-memory-limit: 256Mi
+        container-cpu-request: 100m
+        container-cpu-limit: 125m
       - id: 06_tabsets
-        container-cmd: ["R", "-e", "shinyproxy::run_06_tabsets()"]
         container-image: openanalytics/shinyproxy-demo
         access-groups: scientists
   kubernetesPodTemplateSpecPatches: |
@@ -102,8 +105,8 @@ spec:
     - op: add
       path: /spec/ingressClassName
       value: nginx
-  image: openanalytics/shinyproxy:3.0.0
+  image: openanalytics/shinyproxy:3.2.0
   imagePullPolicy: Always
-  fqdn: 'operator-demo.local'
+  fqdn: shinyproxy-demo.local
   appNamespaces:
     - shinyproxy1-app

@@ -101,6 +101,6 @@ spec:
     - op: add
       path: /spec/ingressClassName
       value: nginx
-  image: openanalytics/shinyproxy:3.0.0
+  image: openanalytics/shinyproxy:3.2.0
   imagePullPolicy: Always
-  fqdn: operator-demo.local
+  fqdn: shinyproxy-demo.local

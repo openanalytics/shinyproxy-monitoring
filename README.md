@@ -4,14 +4,18 @@
 
 This repository provides all resources required for setting up comprehensive
 monitoring of ShinyProxy on Kubernetes. The setup uses Loki (together with
-promtail) for collecting logs of ShinyProxy, the ShinyProxy Operator and any app
+Alloy) for collecting logs of ShinyProxy, the ShinyProxy Operator and any app
 running in ShinyProxy. Prometheus is used for gathering metrics of ShinyProxy
 and the apps (i.e. the resources used by the apps). The setup also includes
-Grafana, together with **six** dashboards for visualizing all logs and metrics.
+Grafana, together with **nine** dashboards for visualizing all logs and metrics.
 
 The retention of both Loki and Prometheus is set to 90 days.
 
 ## Overview of dashboards
+
+Starting with version 3.2.0 of the stack, all documentation has been added to
+the dashboards. See the `Description` panel at the top of every dashboard and
+the info icons of every panel for detailed information.
 
 ### ShinyProxy Usage
 
@@ -20,28 +24,6 @@ The retention of both Loki and Prometheus is set to 90 days.
 
 - **Datasource:** Prometheus
 - **Goal:** provide inside in the *current* usage and performance of ShinyProxy.
-- **Provided statistics**:
-    - App Startup Time
-    - Fine-grained timings
-      - Container schedule time (available on Kubernetes): the time needed for
-        the container to get assigned to a node. Includes the time to launch a
-        new node if the cluster needs to scale-up.
-      - Image pull time (available on Docker and Kubernetes)
-      - Container initialization time (available on Docker, Docker Swarm and
-        Kubernetes): any time needed to start the app which is not part
-        of the other metrics
-      - Application Startup time (available on Docker, Docker swarm and
-        Kubernetes): the time between the start the application process and when
-        the app is reachable by ShinyProxy. For example, in the case of the
-        Shiny app, this is the time the R process takes to startup and be
-        reachable on its webserver.
-    - App Usage Time
-    - Number of running apps (per app name)
-    - Number of logged-in users
-    - Number of active users
-    - Number of auth failures
-    - Number of app start failures
-    - Number of app crashes
 
 **Note**: the last three panels of this dashboard can somtimes show a too high
 value, e.g. the app crashes dashboard could list two app crashes while in
@@ -55,10 +37,6 @@ in [Prometheus](https://www.doit.com/making-peace-with-prometheus-rate/).
 - **Datasource:** Prometheus
 - **Goal:** provide inside in the *long-term* usage and performance of
   ShinyProxy.
-- **Provided statistics**:
-    - Number of times an app has been started (per app)
-    - The total time an app has been used (per app)
-    - The average time an app is used (per app)
 
 ### ShinyProxy logs
 
@@ -66,9 +44,6 @@ in [Prometheus](https://www.doit.com/making-peace-with-prometheus-rate/).
 
 - **Datasource:** Loki
 - **Goal:** show the logs of the ShinyProxy server
-- **Provided statistics**:
-    - Number of warnings
-    - Number of errors
 
 **Note:** This requires ShinyProxy to log using
 the [JSON format](https://shinyproxy.io/documentation/configuration/#json-logstash-logging).
@@ -79,9 +54,6 @@ the [JSON format](https://shinyproxy.io/documentation/configuration/#json-logsta
 
 - **Datasource:** Loki
 - **Goal:** show the logs of the ShinyProxy Operator
-- **Provided statistics**:
-    - Number of warnings
-    - Number of errors
 
 **Note:** promtail is configured such that it recognizes when Java outputs a stack
 trace and therefore collects this as a single log message. We could improve and
@@ -94,9 +66,6 @@ optimize this by adding an option to the ShinyProxy Operator to log to JSON.
 
 - **Datasource:** Loki
 - **Goal:** show the logs of any app started by ShinyProxy.
-- **Provided statistics**:
-    - The time when the app was created. Combined with the filters, this should
-      make it easier to find the correct container (id).
 
 **Note:** this dashboard also works when apps are run in different namespaces
 than the namespace of the ShinyProxy server. As an example, the Dash application
@@ -112,49 +81,46 @@ relevant for this app.
 - **Datasource:** Prometheus
 - **Goal:** show the resources (CPU, Memory, Network) used by any app started by
   ShinyProxy.
-- **Provided statistics**:
-    - Current CPU usage
-    - CPU Limit and Requests
-    - CPU Throttling
-    - Current memory usage
-    - Memory Limit and Requests
-    - Total network traffic (both transmitted and received)
 
 **Note:** this dashboard also works when apps are run in different namespaces
 than the namespace of the ShinyProxy server. As an example, the Dash application
 in ShinyProxy 1 runs in a different namespace.
 
+### ShinyProxy Delegate App Logs
+
+[**Screenshot**](https://raw.githubusercontent.com/openanalytics/shinyproxy-monitoring/master/.github/screenshots/shinyproxy-delegate-app-logs.png)
+
+- **Datasource:** Loki
+- **Goal:** show the logs of *delegate* apps started by ShinyProxy. This are the
+  underlying container/apps when using
+  the [pre-initialization and container sharing feature](https://shinyproxy.io/documentation/configuration/#container-pre-initialization-and-sharing).
+
+### ShinyProxy Delegate App Resources
+
+[**Screenshot**](https://raw.githubusercontent.com/openanalytics/shinyproxy-monitoring/master/.github/screenshots/shinyproxy-delegate-app-resources.png)
+
+- **Datasource:** Prometheus
+- **Goal:** show the resources (CPU, Memory, Network) used by *delegate* apps. This are the
+  underlying container/apps when using
+  the [pre-initialization and container sharing feature](https://shinyproxy.io/documentation/configuration/#container-pre-initialization-and-sharing).
+
+### ShinyProxy Seats
+
+[**Screenshot**](https://raw.githubusercontent.com/openanalytics/shinyproxy-monitoring/master/.github/screenshots/shinyproxy-seats.png)
+
+- **Datasource:** Prometheus
+- **Goal:** show the number of seats (and wait time) for apps that
+  use [pre-initialization and container sharing](https://shinyproxy.io/documentation/configuration/#container-pre-initialization-and-sharing).
+
 ## How it works
 
-### Loki + promtail
+### Loki + Alloy
 
-Both Loki and promtail are used to collect the logs for all relevant dashboards.
+Both Loki and Alloy are used to collect the logs for all relevant dashboards.
 The upstream Loki helm chart is used. No tweaks are needed to make it work with
-ShinyProxy (although parallel processing was disabled). In contrast, the
-configuration of Promtail must be changed to better work with ShinyProxy. See
-the [`overlays/promtail/configs/promtail.yaml`](overlays/promtail/configs/promtail.yaml)
-file. Some important changes are:
-
-* in the `kubernetes-pods` scrape_config an extra section was added to not
-  process any logs of ShinyProxy or the ShinyProxy operator. These logs are
-  processed by the `shinyproxy-and-operator-pods` job.
-
-  ```yaml
-  - action: drop
-    regex: '(shinyproxy)|(shinyproxy-operator)'
-    source_labels:
-      - app
-  ```
-
-* the `kubernetes-pods` scrape_config was changed to process and store some
-  ShinyProxy specific annotations. These annotations are added automatically to
-  any app started by ShinyProxy. These must be stored in Loki, in order to be
-  able to retrieve the logs of an app by specifying the name of the app.
-* the `shinyproxy-and-operator-pods` scrape_config was created in order to
-  process logs of the ShinyProxy server and ShinyProxy Operator. The pipeline of
-  this scrape_config ensures that multiline stacktraces are correctly processed
-  as a single log line. Finally, the job also stores some labels relevant for
-  ShinyProxy servers.
+ShinyProxy. In contrast, the configuration of Alloy must be changed such that it
+collects the correct metadata. See the [`overlays/alloy/configs/config.alloy`](overlays/alloy/configs/config.alloy)
+file.
 
 ### Prometheus
 
@@ -173,24 +139,12 @@ The following changes are made to the configuration of Grafana:
 * [`overlays/monitoring/configs/grafana-dashboardSources.json`](overlays/monitoring/configs/grafana-dashboardSources.json)
   creates a folder for the ShinyProxy dashboards.
 * [`overlays/monitoring/patches/grafana.deployment.yaml`](overlays/monitoring/patches/grafana.deployment.yaml)
-  adapts the Grafana deployment to use the ShinyProxy dashboards. It also uses the latest
-  version of the 8 series of Grafana and adds a PVC for storage.
+  adapts the Grafana deployment to use the ShinyProxy dashboards. It als adds a
+  PVC for storage.
 * [`overlays/monitoring/resources/grafana-storage.pvc.yaml`](overlays/monitoring/resources/grafana-storage.pvc.yaml)
   creates a PVC for Grafana.
 * all dashboards are displayed in the timezone of the browser, show the data for
-  the last 30 minutes and refresh every 10 seconds. In order to enforce this
-  consistency a script is provided to normalize the dashboards.
-
-#### Kube state metrics
-
-[Kube state metrics](https://github.com/kubernetes/kube-state-metrics) is an 
-"Add-on agent to generate and expose cluster-level metrics." Information exported
-by this add-on is used in the ShinyProxy App Resources dashboard. The
-configuration ([`overlays/monitoring/patches/kubeStateMetrics-deployment.yaml`](overlays/monitoring/patches/kubeStateMetrics-deployment.yaml))
-is changed to index additional annotations as labels into
-the `kube_pod_annotations` metric. This is then used by the dashboard to
-populate the variables (or filters) so that users can easily find their pod
-based on the name of the app etc.
+  the last 30 minutes and refresh every 10 seconds.
 
 #### Prometheus
 
@@ -211,17 +165,10 @@ This section demonstrates how to set up this stack in minikube.
 1. Start minikube
 
     ```bash
-    minikube start --kubernetes-version='v1.22.11' --addons=metrics-server
+   minikube start --addons=metrics-server,ingress
     ```
 
-2. Setup ingress (the ingress setup by minikube is too old and causes issues
-   with its validating webhook):
-
-    ```bash
-    helm upgrade --install ingress-nginx ingress-nginx  --repo https://kubernetes.github.io/ingress-nginx   --namespace ingress-nginx --create-namespace --set controller.hostPort.enabled=true
-    ```
-
-3. Configure web access to the cluster. First get the IP of minikube using:
+2. Configure web access to the cluster. First get the IP of minikube using:
 
    ```bash
    minikube ip
@@ -232,10 +179,10 @@ This section demonstrates how to set up this stack in minikube.
 
    ```text
    MINIKUBE_IP       grafana.shinyproxy-demo.local
-   MINIKUBE_IP       operator-demo.local
+   MINIKUBE_IP       shinyproxy-demo.local
    ``` 
 
-4. Set up Loki
+3. Set up Loki
 
     ```bash
     cd overlays/loki
@@ -245,15 +192,15 @@ This section demonstrates how to set up this stack in minikube.
 
    **Note:** re-run the command if it fails when it cannot find some CRDs.
 
-5. Set up Promtail
+4. Set up Alloy 
 
     ```bash
-    cd overlays/promtail
+    cd overlays/alloy
     kustomize build | kubectl apply --server-side -f - 
     cd ../..
     ```
 
-6. Set up Prometheus and Grafana
+5. Set up Prometheus and Grafana
 
     ```bash
     cd overlays/monitoring
@@ -263,7 +210,7 @@ This section demonstrates how to set up this stack in minikube.
    
    **Note:** re-run the command if it fails because it cannot find some CRDs.
 
-7. Set up the demo ShinyProxy Operator deployment:
+6. Set up the demo ShinyProxy Operator deployment:
 
     ```bash
     cd overlays/shinyproxy
@@ -274,16 +221,17 @@ This section demonstrates how to set up this stack in minikube.
 
    **Note:** re-run the command if it fails because it cannot find some CRDs.
 
-You can now log in into shinyproxy on <http://operator-demo.local/shinyproxy1>
-and <http://operator-demo.local/shinyproxy2> with the users `jack` and `jeff` (both
+You can now log in into shinyproxy on <http://shinyproxy-demo.local/shinyproxy1>
+and <http://shinyproxy-demo.local/shinyproxy2> with the users `jack` and `jeff` (both
 have as password `password`). You can log into grafana
-on <http://grafana.shinyproxy-demo.local>, with the username and password `
-admin`.
+on <http://grafana.shinyproxy-demo.local>, with the username and password `admin`.
 
-## Upgrade to 3.1.0
+## Upgrading
 
 This repository uses the same version numbers as ShinyProxy. Always use the same
 version of ShinyProxy and this repository.
+
+### Upgrade to 3.1.0
 
 In release 3.1.0 of this repository, all components were upgraded. In order to
 maintain your logs and metrics, it's important to take the following steps when
@@ -297,5 +245,61 @@ updating:
   the upgrade. See
   the [Loki docs](https://grafana.com/docs/loki/latest/operations/storage/schema/)
   for more information.
+  
+### Upgrade to 3.2.0
+
+This release contains the following improvements:
+
+- replace Promtail by Alloy (for collecting logs). Alloy uses only a single pod
+  instead of a daemonset, this reduces the overall resource consumption of the
+  monitoring stack.
+- include documentation in all dashboards
+- allow selecting multiple apps/instances in app logs and resources dashboards
+- allow to search in log dashboards
+- make it easier to use the app resources dashboard
+- show user, app id and instance in dashboards (only when a single `id` is selected)
+- show app state in dashboards
+- remove dependency on `kube-state-metrics`
+- update all components
+
+In order to upgrade an existing stack:
+
+- edit line 105
+  of [`overlays/loki/configs/config.yaml`](overlays/loki/configs/config.yaml#L105):
+  change the day to be one day after you upgrade Loki. E.g. if you update this
+  on `2025-07-03` (3 July 2025), change the date to `2025-07-04`. If you do
+  not modify this line, you will no longer be able to access logs from before
+  the upgrade. See
+  the [Loki docs](https://grafana.com/docs/loki/latest/operations/storage/schema/)
+  for more information.
+- apply the manifests of all components:
+
+    ```bash
+    cd overlays/loki
+    kustomize build | kubectl apply --server-side -f -
+    cd ../..
+    cd overlays/alloy
+    kustomize build | kubectl apply --server-side -f -
+    cd ../..
+    cd overlays/monitoring
+    kustomize build | kubectl apply --server-side -f -
+    cd ../..
+    ```
+  
+- once everything is running, remove Promtail:
+  
+    ```bash
+    kubectl delete -n loki ds promtail
+    kubectl delete -n loki sa promtail
+    kubectl delete -n loki secret promtail
+    ```
+
+Following these steps both the old and new logs are available throuh Grafana.
+
+## Docker support
+
+The resources in this repository can only be used on Kubernetes. However, a very
+similar stack can be deployed on pure docker hosts by using
+the [ShinyProxy Operator](https://shinyproxy.io/3.2.0-preview/documentation/shinyproxy-operator/docker/#enabling-monitoring).
 
 **(c) Copyright Open Analytics NV, 2022-2024.**
