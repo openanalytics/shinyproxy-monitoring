@@ -1,13 +1,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: shinyproxy-operator
+namespace: shinyproxy
 resources:
   - resources/shinyproxy-operator.namespace.yaml
-  - github.com/openanalytics/shinyproxy-operator/docs/deployment/bases/redis-sentinel?ref=v2.2.0
-  - github.com/openanalytics/shinyproxy-operator/docs/deployment/bases/namespaced?ref=v2.2.0
-  - github.com/openanalytics/shinyproxy-operator/docs/deployment/bases/shinyproxy?ref=v2.2.0
+  - github.com/openanalytics/shinyproxy-operator/docs/deployment/bases/redis-sentinel?ref=v2.3.1
+  - github.com/openanalytics/shinyproxy-operator/docs/deployment/bases/namespaced?ref=v2.3.1
+  - github.com/openanalytics/shinyproxy-operator/docs/deployment/bases/shinyproxy?ref=v2.3.1
   - resources/shinyproxy1.shinyproxy.yaml
-  - resources/shinyproxy2.shinyproxy.yaml
+#  - resources/shinyproxy2.shinyproxy.yaml
 
 patches:
   - path: patches/shinyproxy-operator-role.role.yaml

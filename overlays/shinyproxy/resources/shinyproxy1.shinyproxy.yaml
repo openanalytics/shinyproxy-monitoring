@@ -21,7 +21,7 @@ spec:
         sentinel:
           master: shinyproxy
           password: ${REDIS_PASSWORD}
-          nodes: redis-node-0.redis-headless:26379, redis-node-1.redis-headless:26379, redis-node-2.redis-headless:26379
+          nodes: redis-server-0.redis:26379, redis-server-1.redis:26379, redis-server-2.redis:26379
   proxy:
     usage-stats-url: micrometer
     store-mode: Redis
@@ -29,10 +29,12 @@ spec:
     title: Open Analytics Shiny Proxy
     logo-url: https://www.openanalytics.eu/shinyproxy/logo.png
     log-as-json: true
+    monitoring:
+      grafana-url: http://grafana.monitoring:3000/shinyproxy1/grafana/
     landingPage: /
     containerBackend: kubernetes
     kubernetes:
-      namespace: shinyproxy-operator
+      namespace: shinyproxy
       internal-networking: true
       image-pull-policy: Always
     authentication: simple
@@ -53,6 +55,10 @@ spec:
           WWW_ROOT_PATH: "#{proxy.getRuntimeValue('SHINYPROXY_PUBLIC_PATH')}"
         port: 8787
         max-instances: 5
+        container-memory-request: 1Gi
+        container-memory-limit: 2Gi
+        container-cpu-request: 0.5
+        container-cpu-limit: 1
       - id: dash-demo
         display-name: Dash Demo
         port: 8050

@@ -45,6 +45,7 @@ configMapGenerator:
       - configs/dashboards/shinyproxy-usage.json
       - configs/dashboards/shinyproxy-aggregated-usage.json
       - configs/dashboards/shinyproxy-app-resources.json
+      - configs/dashboards/shinyproxy-app-resources-aggregated.json
     name: grafana-shinyproxy-dashboards
     namespace: monitoring
 
